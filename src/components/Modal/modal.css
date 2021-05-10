@@ -1,0 +1,11 @@
+.modal-main {
+  background-color: var(--clr-primary-9);
+  border-radius: 20px;
+  margin: 0;
+  outline: none;
+}
+
+.links-mobile-container {
+  display: flex;
+  flex-direction: column;
+}
