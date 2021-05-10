@@ -39,8 +39,8 @@ function Navigation(props) {
           <Link to="/">
             <img
               src="/assets/pictoreal.png"
-              height="60"
-              width="60"
+              height="70"
+              width="70"
               alt="pictoreal"
             />
           </Link>

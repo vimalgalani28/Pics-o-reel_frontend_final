@@ -58,15 +58,19 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "hidden",
   },
   colorText: {
-    fontSize: "100%",
+    fontSize: "70%",
     color: "hsl(43, 89%, 70%)",
   },
   containerText: {
     textAlign: "center",
+    width: '80%',
+    margin: '0 auto',
+    paddingTop: '27vh'
   },
   title: {
     color: "#fff",
     fontSize: "4.5rem",
+    marginBottom: '30px',
     [theme.breakpoints.up("sm")]: {
       fontSize: "3.0rem",
     },
@@ -76,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       fontSize: "3.8rem",
     },
-  },
+  }
 }));
 
 const MyEntriesPage = (props) => {

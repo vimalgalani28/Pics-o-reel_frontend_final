@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme) => ({
 
   colorText: {
     fontSize: "500%",
-    fontWeight: '900',
+    fontWeight: '700',
     fontStyle: 'normal',
     color: "hsl(43, 89%, 70%)",
     [theme.breakpoints.down("xs")]: {
-      fontSize: "520%",
+      fontSize: "340%",
     },
   },
   container: {
@@ -37,28 +37,28 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1rem",
     },
     [theme.breakpoints.down("xs")]: {
-      fontSize: ".5rem",
+      fontSize: ".8rem",
     },
     [theme.breakpoints.up("md")]: {
       fontSize: "1.5rem",
     },
-    subHeading: {
-      fontSize: "2rem",
-      fontWeight: 500,
-      fontStyle: 'italic',
-      width: '50%',
-      margin: '0 auto',
-      [theme.breakpoints.up("sm")]: {
-        fontSize: "1rem",
-      },
-      [theme.breakpoints.down("xs")]: {
-        fontSize: ".5rem",
-      },
-      [theme.breakpoints.up("md")]: {
-        fontSize: "1.5rem",
-      },
-    }
   },
+  subHeading: {
+    fontSize: "2rem",
+    fontWeight: 500,
+    fontStyle: 'italic',
+    lineHeight: 1.7,
+    margin: '0 auto',
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1rem",
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: ".8rem",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem",
+    }
+  }
 }));
 
 const LoginPage = (props) => {
