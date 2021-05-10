@@ -64,8 +64,7 @@ const useStyles = makeStyles((theme) => ({
   containerText: {
     textAlign: "center",
     width: '80%',
-    margin: '0 auto',
-    paddingTop: '27vh'
+    margin: '0 auto'
   },
   title: {
     color: "#fff",
