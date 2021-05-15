@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {makeStyles} from '@material-ui/core';
+import { makeStyles } from "@material-ui/core";
 import {
   TextField,
   Grid,
@@ -14,6 +14,11 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import CustomizedSnackbar from "../Snackbar/Snackbar";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import { connect } from "react-redux";
 import { addMyEntry } from "../../actions/myEntry";
 import { WifiLoader } from "react-awesome-loaders";
@@ -47,14 +52,14 @@ const useStyles = makeStyles((theme) => ({
   },
   containerText: {
     textAlign: "center",
-    width: '80%',
-    margin: '0 auto',
-    paddingTop: '27vh'
+    width: "80%",
+    margin: "0 auto",
+    paddingTop: "27vh",
   },
   title: {
     color: "#fff",
     fontSize: "4.5rem",
-    marginBottom: '30px',
+    marginBottom: "30px",
     [theme.breakpoints.up("sm")]: {
       fontSize: "3.0rem",
     },
@@ -64,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       fontSize: "3.8rem",
     },
-  }
+  },
 }));
 
 const Form = (props) => {
@@ -74,7 +79,7 @@ const Form = (props) => {
     const lastEntry = props.myEntries[props.myEntries.length - 1];
     contact = lastEntry.ownerPhone;
   }
-  const classes = useStyles()
+  const classes = useStyles();
   initialState.contact = contact;
   const [formData, setFormData] = useState(initialState);
   const [open, setOpen] = useState(false);
@@ -83,6 +88,26 @@ const Form = (props) => {
   const [serverError, setServerError] = useState("");
   const [fileSizeError, setFileSizeError] = useState(false);
   const [formLoader, setFormLoader] = useState(false);
+
+  const [dialogbox, setDialogbox] = useState(false);
+
+  const handleClickOpen = () => {
+    if (
+      formData.avatar &&
+      formData.title.trim() &&
+      formData.description.trim() &&
+      formData.section &&
+      !invalidPhone
+    ) {
+      setDialogbox(true);
+    } else {
+      setFormFill(true);
+    }
+  };
+
+  const handleClose = () => {
+    setDialogbox(false);
+  };
 
   const handleChangePhone = (value) => {
     if (value > 0 && !isNaN(value) && value.length === 10) {
@@ -140,6 +165,7 @@ const Form = (props) => {
           setOpen(true);
           setFormData(initialState);
           setServerError("");
+          setDialogbox(false);
           setFormLoader(false);
         } else {
           if (res.data.status === 500) {
@@ -154,7 +180,7 @@ const Form = (props) => {
     }
   };
 
-  if(props.myEntries.length < 6) {
+  if (props.myEntries.length < 8) {
     return (
       <div>
         {!formLoader ? (
@@ -204,7 +230,7 @@ const Form = (props) => {
                       }
                     />
                   </Grid>
-  
+
                   <Grid item xs={12}>
                     <FormControl fullWidth>
                       <InputLabel>Section</InputLabel>
@@ -214,25 +240,34 @@ const Form = (props) => {
                           setFormData({ ...formData, section: e.target.value })
                         }
                       >
-                        {["Painting", "Photography", "Calligraphy"].map(
-                          (section) => {
-                            const sectionEntries = props.myEntries.filter(
-                              (entry) => entry.section === section
+                        {[
+                          "Painting",
+                          "Photography",
+                          "Calligraphy",
+                          "Independence",
+                        ].map((section) => {
+                          const sectionEntries = props.myEntries.filter(
+                            (entry) => entry.section === section
+                          );
+                          if (sectionEntries.length < 2) {
+                            return (
+                              <MenuItem value={section} key={section}>
+                                {section === "Calligraphy"
+                                  ? "Others"
+                                  : section === "Painting"
+                                  ? "Painting/Sketches"
+                                  : section === "Photography"
+                                  ? "Photography"
+                                  : "Independence Day Special"}
+                              </MenuItem>
                             );
-                            if (sectionEntries.length < 2) {
-                              return (
-                                <MenuItem value={section} key={section}>
-                                  {section}
-                                </MenuItem>
-                              );
-                            }
-                            return null;
                           }
-                        )}
+                          return null;
+                        })}
                       </Select>
                     </FormControl>
                   </Grid>
-  
+
                   <Grid item xs={12}>
                     <TextField
                       id="outlined-multiline-static"
@@ -241,13 +276,16 @@ const Form = (props) => {
                       rows={4}
                       value={formData.description}
                       onChange={(e) =>
-                        setFormData({ ...formData, description: e.target.value })
+                        setFormData({
+                          ...formData,
+                          description: e.target.value,
+                        })
                       }
                       //   defaultValue="Default Value"
                       variant="outlined"
                     />
                   </Grid>
-  
+
                   <Grid item xs={12}>
                     <InputLabel>Image</InputLabel>
                     <br></br>
@@ -295,10 +333,34 @@ const Form = (props) => {
                       variant="outlined"
                       color="primary"
                       fullWidth
-                      onClick={submitEntry}
+                      onClick={handleClickOpen}
                     >
                       Submit
                     </Button>
+                    <Dialog
+                      open={dialogbox}
+                      onClose={handleClose}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                    >
+                      <DialogTitle id="alert-dialog-title">
+                        {"Are you sure?"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                          Entry once submitted can neither be edited nor be
+                          removed!
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                          No
+                        </Button>
+                        <Button onClick={submitEntry} color="primary" autoFocus>
+                          Yes
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
                   </Grid>
                 </Grid>
               </CardContent>
@@ -327,18 +389,23 @@ const Form = (props) => {
     );
   } else {
     return (
-          <div className={classes.containerText}>
-              <h1 className={classes.title}>
-                <br></br>
-                <span className={classes.colorText}>You have already submitted the allowed number of entries.</span>
-              </h1>
-              <Button variant="contained" color="primary" onClick={()=> history.push('myEntries')}>
-                View Your Entries
-              </Button>
-          </div>
-    )
+      <div className={classes.containerText}>
+        <h1 className={classes.title}>
+          <br></br>
+          <span className={classes.colorText}>
+            Thank you for submitting your entries!
+          </span>
+        </h1>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => history.push("myEntries")}
+        >
+          View Your Entries
+        </Button>
+      </div>
+    );
   }
-
 };
 
 const mapStateToProps = (state) => ({

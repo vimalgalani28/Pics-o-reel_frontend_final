@@ -63,13 +63,13 @@ const useStyles = makeStyles((theme) => ({
   },
   containerText: {
     textAlign: "center",
-    width: '80%',
-    margin: '0 auto'
+    width: "80%",
+    margin: "0 auto",
   },
   title: {
     color: "#fff",
     fontSize: "4.5rem",
-    marginBottom: '30px',
+    marginBottom: "30px",
     [theme.breakpoints.up("sm")]: {
       fontSize: "3.0rem",
     },
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       fontSize: "3.8rem",
     },
-  }
+  },
 }));
 
 const MyEntriesPage = (props) => {
@@ -92,6 +92,10 @@ const MyEntriesPage = (props) => {
   const calligraphies = props.myEntries.filter(
     (entry) => entry.section === "Calligraphy"
   );
+  const independenceDayEntries = props.myEntries.filter(
+    (entry) => entry.section === "Independence"
+  );
+
   const userAvatar = props.user.displayName.split("_")[1][0];
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -116,9 +120,10 @@ const MyEntriesPage = (props) => {
           scrollButtons="on"
           textColor="primary"
         >
-          <Tab label="Painting" {...a11yProps(0)} />
+          <Tab label="Painting/Sketches" {...a11yProps(0)} />
           <Tab label="Photography" {...a11yProps(1)} />
-          <Tab label="Calligraphy" {...a11yProps(2)} />
+          <Tab label="Others" {...a11yProps(2)} />
+          <Tab label="Independence Day Special" {...a11yProps(3)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -132,15 +137,16 @@ const MyEntriesPage = (props) => {
           dir={theme.direction}
           className={classes.container}
         >
-          {
-            paintings.length === 0 &&
+          {paintings.length === 0 && (
             <div className={classes.containerText}>
               <h1 className={classes.title}>
                 <br></br>
-                <span className={classes.colorText}>You haven't submitted entry in this section</span>
+                <span className={classes.colorText}>
+                  You haven't submitted any entries in this section
+                </span>
               </h1>
             </div>
-          }
+          )}
           <Grid container spacing={4}>
             {paintings.map((paint) => {
               return (
@@ -157,15 +163,16 @@ const MyEntriesPage = (props) => {
           dir={theme.direction}
           className={classes.container}
         >
-          {
-            photographies.length === 0 &&
+          {photographies.length === 0 && (
             <div className={classes.containerText}>
               <h1 className={classes.title}>
                 <br></br>
-                <span className={classes.colorText}>You haven't submitted entry in this section</span>
+                <span className={classes.colorText}>
+                  You haven't submitted any entries in this section
+                </span>
               </h1>
             </div>
-          }
+          )}
           <Grid container spacing={4}>
             {photographies.map((photo) => {
               return (
@@ -188,17 +195,51 @@ const MyEntriesPage = (props) => {
           dir={theme.direction}
           className={classes.container}
         >
-          {
-            calligraphies.length === 0 &&
+          {calligraphies.length === 0 && (
             <div className={classes.containerText}>
               <h1 className={classes.title}>
                 <br></br>
-                <span className={classes.colorText}>You haven't submitted entry in this section</span>
+                <span className={classes.colorText}>
+                  You haven't submitted any entries in this section
+                </span>
               </h1>
             </div>
-          }
+          )}
           <Grid container spacing={3}>
             {calligraphies.map((calli) => {
+              return (
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  key={calli._id}
+                  className={classes.grid}
+                >
+                  <EntryCard entry={calli} userAvatar={userAvatar} />
+                </Grid>
+              );
+            })}
+          </Grid>
+        </TabPanel>
+
+        <TabPanel
+          value={value}
+          index={3}
+          dir={theme.direction}
+          className={classes.container}
+        >
+          {independenceDayEntries.length === 0 && (
+            <div className={classes.containerText}>
+              <h1 className={classes.title}>
+                <br></br>
+                <span className={classes.colorText}>
+                  You haven't submitted any entries in this section
+                </span>
+              </h1>
+            </div>
+          )}
+          <Grid container spacing={3}>
+            {independenceDayEntries.map((calli) => {
               return (
                 <Grid
                   item

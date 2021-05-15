@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
 
   colorText: {
     fontSize: "500%",
-    fontWeight: '700',
-    fontStyle: 'normal',
+    fontWeight: "700",
+    fontStyle: "normal",
     color: "hsl(43, 89%, 70%)",
     [theme.breakpoints.down("xs")]: {
       fontSize: "340%",
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
     fontSize: "2rem",
     fontWeight: 500,
-    fontStyle: 'italic',
+    fontStyle: "italic",
     [theme.breakpoints.up("sm")]: {
       fontSize: "1rem",
     },
@@ -40,25 +40,25 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       fontSize: "1.5rem",
     },
+  },
+  subHeading: {
+    fontSize: "2rem",
+    fontWeight: 500,
+    fontStyle: "italic",
+    lineHeight: 1.7,
+    width: "90%",
+    margin: "0 auto",
+    marginTop: "10px",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1rem",
     },
-  subHeading : {
-      fontSize: "2rem",
-      fontWeight: 500,
-      fontStyle: 'italic',
-      lineHeight: 1.7,
-      width: '90%',
-      margin: '0 auto',
-      marginTop : '10px',
-      [theme.breakpoints.up("sm")]: {
-        fontSize: "1rem",
-      },
-      [theme.breakpoints.down("xs")]: {
-        fontSize: ".8rem",
-      },
-      [theme.breakpoints.up("md")]: {
-        fontSize: "1.5rem",
-      }
-  }
+    [theme.breakpoints.down("xs")]: {
+      fontSize: ".8rem",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem",
+    },
+  },
 }));
 
 const Main = (props) => {
@@ -83,7 +83,9 @@ const Main = (props) => {
             <h1 className={classes.title}>
               Pictoreal presents<br></br>
               <span className={classes.colorText}>Pics-o-reel</span>
-              <p className={classes.subHeading} style={{color: 'white'}}>An Annual Art & Photography Exhibition Cum Competition.</p>
+              <p className={classes.subHeading} style={{ color: "white" }}>
+                An Annual Art & Photography Exhibition Cum Competition.
+              </p>
             </h1>
 
             <Scroll to="header" smooth={true}>
@@ -95,7 +97,7 @@ const Main = (props) => {
             </Scroll>
             <br></br>
             <Button variant="contained" color="primary" onClick={handleClick}>
-              Submit ur entry
+              Submit Your Entry
             </Button>
           </div>
         </Collapse>

@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
 
   colorText: {
     fontSize: "500%",
-    fontWeight: '700',
-    fontStyle: 'normal',
+    fontWeight: "700",
+    fontStyle: "normal",
     color: "hsl(43, 89%, 70%)",
     [theme.breakpoints.down("xs")]: {
       fontSize: "340%",
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
     fontSize: "2rem",
     fontWeight: 500,
-    fontStyle: 'italic',
+    fontStyle: "italic",
     [theme.breakpoints.up("sm")]: {
       fontSize: "1rem",
     },
@@ -46,9 +46,9 @@ const useStyles = makeStyles((theme) => ({
   subHeading: {
     fontSize: "2rem",
     fontWeight: 500,
-    fontStyle: 'italic',
+    fontStyle: "italic",
     lineHeight: 1.7,
-    margin: '0 auto',
+    margin: "0 auto",
     [theme.breakpoints.up("sm")]: {
       fontSize: "1rem",
     },
@@ -57,8 +57,8 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up("md")]: {
       fontSize: "1.5rem",
-    }
-  }
+    },
+  },
 }));
 
 const LoginPage = (props) => {
@@ -120,12 +120,27 @@ const LoginPage = (props) => {
           <h1 className={classes.title}>
             Pictoreal presents<br></br>
             <span className={classes.colorText}>Pics-o-reel</span>
-            <p className={classes.subHeading} style={{ color: 'white' }}>An Annual Art & Photography Exhibition Cum Competition.</p>
+            <p className={classes.subHeading} style={{ color: "white" }}>
+              An Annual Art & Photography Exhibition Cum Competition.
+            </p>
           </h1>
+          <br></br>
           <MicrosoftLogin
             clientId="bf8681db-1c8d-4f9f-8d94-14deca9788a4"
             authCallback={authHandler}
           />
+          <br></br>
+          <p
+            className={classes.subHeading}
+            style={{
+              fontSize: "15px",
+              color: "var(--clr-primary-8)",
+              fontWeight: "500",
+            }}
+          >
+            Use credentials provided by college (Ex.
+            abc@pictsctr.onmicrosoft.com or xyz@ms.pict.edu)
+          </p>
         </div>
       </Collapse>
     </div>
