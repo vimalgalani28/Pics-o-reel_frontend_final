@@ -67,7 +67,7 @@ const LoginPage = (props) => {
 
       const newOptions = {
         method: "GET",
-        url: "https://pics-api.pictoreal.in/entries/count",
+        url: "http://localhost:5000/entries/count",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

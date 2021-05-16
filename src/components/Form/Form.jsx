@@ -150,7 +150,7 @@ const Form = (props) => {
       body.append("section", formData.section);
       const options = {
         method: "POST",
-        url: "https://pics-api.pictoreal.in/entry/upload",
+        url: "http://localhost:5000/entry/upload",
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

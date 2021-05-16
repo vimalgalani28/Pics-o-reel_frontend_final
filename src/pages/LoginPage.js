@@ -74,7 +74,7 @@ const LoginPage = (props) => {
     }
     const options = {
       method: "POST",
-      url: "https://pics-api.pictoreal.in/user/login",
+      url: "http://localhost:5000/user/login",
       data: {
         idToken: data.idToken.rawIdToken,
       },
@@ -89,7 +89,7 @@ const LoginPage = (props) => {
         // setLoginError("");
         const newOptions = {
           method: "GET",
-          url: "https://pics-api.pictoreal.in/entry",
+          url: "http://localhost:5000/entry",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
