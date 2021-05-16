@@ -9,7 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import AddEntryPage from "../pages/AddEntryPage";
 import MyEntriesPage from "../pages/MyEntriesPage";
-import Count from "../pages/Count";
+import AdminPage from "../pages/AdminPage";
 export const history = createBrowserHistory();
 
 const AppRouter = (props) => {
@@ -38,9 +38,9 @@ const AppRouter = (props) => {
             component={MyEntriesPage}
           ></PrivateRoute>
           <PrivateRoute
-            path="/admin/count"
+            path="/admin/leaderboard"
             exact={true}
-            component={Count}
+            component={AdminPage}
           ></PrivateRoute>
           <Route component={NotFoundPage}></Route>
         </Switch>

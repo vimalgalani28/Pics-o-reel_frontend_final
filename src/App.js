@@ -12,7 +12,7 @@ const App = (props) => {
     const fetchUser = async (token) => {
       const options = {
         method: "GET",
-        url: "https://pics-api.pictoreal.in/user",
+        url: "http://localhost:5000/user",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -25,7 +25,7 @@ const App = (props) => {
           props.dispatch(loginUser(user));
           const newOptions = {
             method: "GET",
-            url: "https://pics-api.pictoreal.in/entry",
+            url: "http://localhost:5000/entry",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
