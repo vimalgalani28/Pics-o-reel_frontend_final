@@ -9,9 +9,13 @@ import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import AddEntryPage from "../pages/AddEntryPage";
 import MyEntriesPage from "../pages/MyEntriesPage";
+<<<<<<< HEAD
 import Count from "../pages/Count";
 import AllEntries from "../voting/AllEntries";
 import Wishlist from "../voting/Wishlist";
+=======
+import AdminPage from "../pages/AdminPage";
+>>>>>>> 78aae205e93007efe53e00a4faf4a35489161a73
 export const history = createBrowserHistory();
 
 const AppRouter = (props) => {
@@ -40,9 +44,9 @@ const AppRouter = (props) => {
             component={AllEntries}
           ></PrivateRoute>
           <PrivateRoute
-            path="/admin/count"
+            path="/admin/leaderboard"
             exact={true}
-            component={Count}
+            component={AdminPage}
           ></PrivateRoute>
           <PrivateRoute
             path="/admin/allEntries"
