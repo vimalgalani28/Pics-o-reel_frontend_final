@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import axios from "axios";
 import { loginUser } from "../actions/user";
-import { setMyEntries } from "../actions/myEntry";
+import { setAllEntries } from "../actions/allEntry";
 
 const useStyles = makeStyles((theme) => ({
   full: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     minHeight: "100vh",
-    // fontFamily: "'Montserrat', sans-serif"
+    fontFamily: "'Gilda Display', Sans-serif",
   },
 
   colorText: {
@@ -87,17 +87,36 @@ const LoginPage = (props) => {
         localStorage.setItem("picsjwt", JSON.stringify(token));
         props.dispatch(loginUser(user));
         // setLoginError("");
-        const newOptions = {
+        const allEntriesAPI = {
           method: "GET",
-          url: "http://localhost:5000/entry",
+          url: "http://localhost:5000/entries/allentries",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         };
-        const res2 = await axios(newOptions);
+
+        const res2 = await axios(allEntriesAPI);
+        // console.log(res.data);
+        // setAllSubEntries(res.data);
+
+        const shuffleEntries = (array) => {
+          var currentIndex = array.length,
+            temporaryValue,
+            randomIndex;
+          while (0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+          }
+          return array;
+        };
+        const shuffledEntries = shuffleEntries(res2.data);
+
         if (!res2.data.error) {
-          props.dispatch(setMyEntries(res2.data));
+          props.dispatch(setAllEntries(shuffledEntries));
         }
       } else {
         if (res.data.status === 401) {

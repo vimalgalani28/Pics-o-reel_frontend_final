@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -21,7 +20,6 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import IconButton from "@material-ui/core/IconButton";
 import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import { connect } from "react-redux";
-import { setAllEntries } from "../actions/allEntry";
 import { addInWishlist, removeExpense } from "../actions/wishlist";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -122,33 +120,10 @@ const useStylesCard = makeStyles((theme) => ({
 }));
 
 const AllEntries = (props) => {
-  // const handleWish = (entry) => {
-  //   console.log(entry);
-  //   entry.wish = !entry.wish;
-  // };
-
-  useEffect(() => {
-    const fetchAllEntries = async () => {
-      const token = JSON.parse(localStorage.getItem("picsjwt"));
-      const allEntriesAPI = {
-        method: "GET",
-        url: "http://localhost:5000/entries/allentries",
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      try {
-        const res = await axios(allEntriesAPI);
-        // console.log(res.data);
-        // setAllSubEntries(res.data);
-        props.dispatch(setAllEntries(res.data));
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchAllEntries();
-  });
+  // const [painting, setPainting] = useState([]);
+  // const [photographs, setPhotograph] = useState([]);
+  // const [independence, setIndependence] = useState([]);
+  // const [calligraphy, setCalligraphy] = useState([]);
 
   const handleAddWishlist = (entry) => {
     console.log(entry.wish);
@@ -159,9 +134,8 @@ const AllEntries = (props) => {
       console.log("removed!", entry._id);
     }
     entry.wish = !entry.wish;
-    console.log(props.myWishEntries);
   };
-  // console.log(props);
+  console.log(props.allEntries);
 
   const paintings = props.allEntries.filter(
     (entry) => entry.section === "Painting"
@@ -223,7 +197,7 @@ const AllEntries = (props) => {
                 <h1 className={classes.title}>
                   <br></br>
                   <span className={classes.colorText}>
-                    You haven't submitted any entries in this section
+                    Something went wrong!
                   </span>
                 </h1>
               </div>
@@ -291,7 +265,7 @@ const AllEntries = (props) => {
                 <h1 className={classes.title}>
                   <br></br>
                   <span className={classes.colorText}>
-                    You haven't submitted any entries in this section
+                    Something went wrong!
                   </span>
                 </h1>
               </div>
@@ -363,7 +337,7 @@ const AllEntries = (props) => {
                 <h1 className={classes.title}>
                   <br></br>
                   <span className={classes.colorText}>
-                    You haven't submitted any entries in this section
+                    Something went wrong!
                   </span>
                 </h1>
               </div>
@@ -436,7 +410,7 @@ const AllEntries = (props) => {
                 <h1 className={classes.title}>
                   <br></br>
                   <span className={classes.colorText}>
-                    You haven't submitted any entries in this section
+                    Something went wrong!
                   </span>
                 </h1>
               </div>

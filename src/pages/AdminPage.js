@@ -7,7 +7,7 @@ import {
   setLeaderBoardEntries,
 } from "../actions/leaderboard";
 import { Redirect } from "react-router";
-import LeaderBoardTable from "../components/LeaderBoardTable.js/LeaderBoardTable";
+import LeaderBoardTable from "../components/LeaderBoardTable/LeaderBoardTable";
 import {
   AppBar,
   InputBase,
