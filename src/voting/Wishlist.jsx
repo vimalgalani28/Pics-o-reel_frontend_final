@@ -239,6 +239,7 @@ const AllEntries = (props) => {
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+
   const classes = useStyles();
   const classesCard = useStylesCard();
 
