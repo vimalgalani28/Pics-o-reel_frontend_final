@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
@@ -9,7 +9,6 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { red } from "@material-ui/core/colors";
-import EntryCard from "../components/Card/Card";
 import { Button, Grid } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -24,8 +23,6 @@ import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import { connect } from "react-redux";
 import { setAllEntries } from "../actions/allEntry";
 import { addInWishlist, removeExpense } from "../actions/wishlist";
-import { ContactsOutlined } from "@material-ui/icons";
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -151,7 +148,7 @@ const AllEntries = (props) => {
       }
     };
     fetchAllEntries();
-  }, []);
+  });
 
   const handleAddWishlist = (entry) => {
     console.log(entry.wish);
@@ -233,9 +230,6 @@ const AllEntries = (props) => {
             )}
             <Grid container spacing={4}>
               {paintings.map((paint) => {
-                const handleEachWish = () => {
-                  paint.wish = !paint.wish;
-                };
                 return (
                   <Grid item xs={12} sm={6} key={paint._id}>
                     <Card className={classesCard.root}>

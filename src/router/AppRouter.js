@@ -7,15 +7,9 @@ import { createBrowserHistory } from "history";
 import { connect } from "react-redux";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
-import AddEntryPage from "../pages/AddEntryPage";
-import MyEntriesPage from "../pages/MyEntriesPage";
-<<<<<<< HEAD
-import Count from "../pages/Count";
 import AllEntries from "../voting/AllEntries";
 import Wishlist from "../voting/Wishlist";
-=======
 import AdminPage from "../pages/AdminPage";
->>>>>>> 78aae205e93007efe53e00a4faf4a35489161a73
 export const history = createBrowserHistory();
 
 const AppRouter = (props) => {
@@ -34,12 +28,12 @@ const AppRouter = (props) => {
             component={DashboardPage}
           ></PrivateRoute>
           <PrivateRoute
-            path="/create"
+            path="/wishlist"
             exact={true}
             component={Wishlist}
           ></PrivateRoute>
           <PrivateRoute
-            path="/myEntries"
+            path="/entries"
             exact={true}
             component={AllEntries}
           ></PrivateRoute>

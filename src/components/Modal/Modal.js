@@ -1,9 +1,15 @@
 import React from "react";
 // import { Modal, Button } from "react-bootstrap";
-import { Modal, Slide, makeStyles, Button, IconButton } from "@material-ui/core";
+import {
+  Modal,
+  Slide,
+  makeStyles,
+  Button,
+  IconButton,
+} from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import "./modal.css";
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles({
   root: {

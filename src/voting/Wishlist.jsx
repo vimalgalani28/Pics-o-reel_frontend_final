@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
@@ -10,7 +9,6 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { red } from "@material-ui/core/colors";
-import EntryCard from "../components/Card/Card";
 import { Button, Grid } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -19,17 +17,17 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import moment from "moment";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-import IconButton from "@material-ui/core/IconButton";
-import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import { connect } from "react-redux";
-import { setAllEntries } from "../actions/allEntry";
-import { addInWishlist, removeExpense } from "../actions/wishlist";
-import { ContactsOutlined } from "@material-ui/icons";
 import CheckBoxTwoToneIcon from "@material-ui/icons/CheckBoxTwoTone";
 import CheckBoxOutlineBlankTwoToneIcon from "@material-ui/icons/CheckBoxOutlineBlankTwoTone";
-import { addInVote, deleteInVote, setInVote } from "../actions/voteList";
+import { addInVote, deleteInVote } from "../actions/voteList";
+import CustomizedSnackbar from "../components/Snackbar/Snackbar";
 
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -129,41 +127,37 @@ const useStylesCard = makeStyles((theme) => ({
 }));
 
 const AllEntries = (props) => {
-  const history = useHistory();
+  // const [voteLimit, setVoteLimit] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [openVotePaint, setOpenVotePaint] = useState(
+    props.user.hasVotedPainting
+  );
+  const [openVotePhoto, setOpenVotePhoto] = useState(
+    props.user.hasVotedPhotography
+  );
+  const [openVoteIndependence, setopenVoteIndependence] = useState(
+    props.user.hasVotedIndependence
+  );
+  const [voteError, setVoteError] = useState("");
+
   // const handleWish = (entry) => {
   //   console.log(entry);
   //   entry.wish = !entry.wish;
   // };
 
-  //   useEffect(() => {
-  //     const fetchAllEntries = async () => {
-  //       const token = JSON.parse(localStorage.getItem("picsjwt"));
-  //       const allEntriesAPI = {
-  //         method: "GET",
-  //         url: "http://localhost:5000oreal.in/entries/allentries",
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       };
-  //       try {
-  //         const res = await axios(allEntriesAPI);
-  //         // console.log(res.data);
-  //         // setAllSubEntries(res.data);
-  //         props.dispatch(setAllEntries(res.data));
-  //       } catch (e) {
-  //         console.log(e);
-  //       }
-  //     };
-  //     fetchAllEntries();
-  //   }, []);
+  // useEffect(() => {
+  //   console.log(props.voteEntries.length);
+  //   if (props.voteEntries.length === 3) {
+  //     setVoteLimit(true);
+  //   } else {
+  //     setVoteLimit(false);
+  //   }
+  // }, [props.voteEntries]);
 
   const giveVote = async (section) => {
-    if (props.voteEntries) {
+    if (props.voteEntries.length <= 3) {
+      setVoteError("");
       const vote = props.voteEntries.map((entry) => {
-        // if (entry.section !== section) {
-        //   return null;
-        // }
         return entry._id;
       });
       console.log(vote);
@@ -189,14 +183,35 @@ const AllEntries = (props) => {
 
       try {
         const res = await axios(options);
-        console.log(res.data);
+        if (res.data) {
+          if (res.data.error) {
+            setVoteError(res.data.error);
+          }
+          switch (section) {
+            case "independence":
+              console.log("trued!");
+              setopenVoteIndependence(true);
+              break;
+            case "painting":
+              setOpenVotePaint(true);
+              break;
+            case "photography":
+              setOpenVotePhoto(true);
+              break;
+            default:
+              break;
+          }
+        }
         vote.map((id) => {
-          props.dispatch(deleteInVote(id));
+          return props.dispatch(deleteInVote(id));
         });
+        setDialogbox(false);
         console.log("Deleted All");
       } catch (e) {
         console.log("Error", e);
       }
+    } else {
+      setVoteError("You can select max 3 entries!");
     }
   };
 
@@ -207,21 +222,16 @@ const AllEntries = (props) => {
       props.dispatch(addInVote(entry));
     } else {
       props.dispatch(deleteInVote(entry._id));
-      console.log("removed!", entry._id);
     }
     entry.vote = !entry.vote;
     console.log(props.voteEntries);
   };
-  console.log(props);
 
   const paintings = props.myWishEntries.filter(
     (entry) => entry.section === "Painting"
   );
   const photographies = props.myWishEntries.filter(
     (entry) => entry.section === "Photography"
-  );
-  const calligraphies = props.myWishEntries.filter(
-    (entry) => entry.section === "Calligraphy"
   );
   const independenceDayEntries = props.myWishEntries.filter(
     (entry) => entry.section === "Independence"
@@ -240,9 +250,28 @@ const AllEntries = (props) => {
     setValue(index);
   };
 
+  const [dialogbox, setDialogbox] = useState(false);
+
+  const handleClickOpen = () => {
+    if (props.voteEntries.length === 0) {
+      setVoteError("Select atleast 1 entry!");
+    } else if (props.voteEntries.length <= 3) {
+      setVoteError("");
+      setDialogbox(true);
+    } else {
+      setVoteError("You can select max 3 entries!");
+    }
+  };
+
+  const handleClose = () => {
+    setDialogbox(false);
+  };
+
   return (
     <div>
       <div className="entries">
+        <CustomizedSnackbar open={open} setOpen={setOpen} />
+
         <AppBar position="static" color="default" className={classes.appBar}>
           <Tabs
             value={value}
@@ -254,8 +283,7 @@ const AllEntries = (props) => {
           >
             <Tab label="Painting/Sketches" {...a11yProps(0)} />
             <Tab label="Photography" {...a11yProps(1)} />
-            <Tab label="Others" {...a11yProps(2)} />
-            <Tab label="Independence Day Special" {...a11yProps(3)} />
+            <Tab label="Independence Day Special" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -269,81 +297,129 @@ const AllEntries = (props) => {
             dir={theme.direction}
             className={classes.container}
           >
-            {paintings.length === 0 && (
+            {paintings.length === 0 && !openVotePaint && (
               <div className={classes.containerText}>
                 <h1 className={classes.title}>
                   <br></br>
                   <span className={classes.colorText}>
-                    You haven't submitted any entries in this section
+                    You haven't added any entries in wishlist
                   </span>
                 </h1>
               </div>
             )}
-            <Grid container spacing={4}>
-              {paintings.map((paint) => {
-                const handleEachWish = () => {
-                  paint.wish = !paint.wish;
-                };
-                return (
-                  <Grid item xs={12} sm={6} key={paint._id}>
-                    <Card className={classesCard.root}>
-                      <CardHeader
-                        avatar={
-                          <Avatar
-                            aria-label="recipe"
-                            className={classesCard.avatar}
-                          ></Avatar>
-                        }
-                        action={
-                          <Button
-                            color="primary"
-                            aria-label="add to wishlist"
-                            onClick={(e) => handleAddVoteList(paint, e)}
-                          >
-                            {props.voteEntries ? (
-                              props.voteEntries.some(
-                                (entry) => entry._id === paint._id
-                              ) ? (
-                                <CheckBoxTwoToneIcon />
-                              ) : (
-                                <CheckBoxOutlineBlankTwoToneIcon />
-                              )
-                            ) : (
-                              <></>
+            {!openVotePaint ? (
+              <>
+                <Grid container spacing={4}>
+                  {paintings.map((paint) => {
+                    return (
+                      <Grid item xs={12} sm={6} key={paint._id}>
+                        <Card className={classesCard.root}>
+                          <CardHeader
+                            avatar={
+                              <Avatar
+                                aria-label="recipe"
+                                className={classesCard.avatar}
+                              ></Avatar>
+                            }
+                            action={
+                              <Button
+                                color="primary"
+                                aria-label="add to wishlist"
+                                onClick={(e) => handleAddVoteList(paint, e)}
+                              >
+                                {props.voteEntries ? (
+                                  props.voteEntries.some(
+                                    (entry) => entry._id === paint._id
+                                  ) ? (
+                                    <CheckBoxTwoToneIcon />
+                                  ) : (
+                                    <CheckBoxOutlineBlankTwoToneIcon />
+                                  )
+                                ) : (
+                                  <></>
+                                )}
+                              </Button>
+                            }
+                            title={paint.title}
+                            subheader={moment(paint.createdAt).format(
+                              "MMMM D, YYYY"
                             )}
-                          </Button>
-                        }
-                        title={paint.title}
-                        subheader={moment(paint.createdAt).format(
-                          "MMMM D, YYYY"
-                        )}
-                      />
-                      <CardMedia
-                        className={classesCard.media}
-                        image={paint.imageThumbLink}
-                      />
-                      <CardContent>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
+                          />
+                          <CardMedia
+                            className={classesCard.media}
+                            image={paint.imageThumbLink}
+                          />
+                          <CardContent>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              component="p"
+                            >
+                              {paint.description}
+                            </Typography>
+                          </CardContent>
+                          <CardActions disableSpacing></CardActions>
+                        </Card>
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+                <div className={classes.containerText}>
+                  <h1 className={classes.title}>
+                    <br></br>
+                    <span className={classes.colorText}>{voteError}</span>
+                  </h1>
+                </div>
+                {paintings.length !== 0 ? (
+                  <>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleClickOpen}
+                    >
+                      Vote!
+                    </Button>
+                    <Dialog
+                      open={dialogbox}
+                      onClose={handleClose}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                    >
+                      <DialogTitle id="alert-dialog-title">
+                        {"Are you sure?"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                          Entry once submitted can neither be edited nor be
+                          removed!
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                          No
+                        </Button>
+                        <Button
+                          onClick={(e) => giveVote("painting", e)}
+                          color="primary"
+                          autoFocus
                         >
-                          {paint.description}
-                        </Typography>
-                      </CardContent>
-                      <CardActions disableSpacing></CardActions>
-                    </Card>
-                  </Grid>
-                );
-              })}
-            </Grid>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={(e) => giveVote("painting", e)}
-            >
-              Vote!
-            </Button>
+                          Yes
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            ) : (
+              <div className={classes.containerText}>
+                <h1 className={classes.title}>
+                  <br></br>
+                  <span className={classes.colorText}>Already voted!</span>
+                </h1>
+              </div>
+            )}
           </TabPanel>
           <TabPanel
             value={value}
@@ -351,242 +427,268 @@ const AllEntries = (props) => {
             dir={theme.direction}
             className={classes.container}
           >
-            {photographies.length === 0 && (
+            {photographies.length === 0 && !openVotePhoto && (
               <div className={classes.containerText}>
                 <h1 className={classes.title}>
                   <br></br>
                   <span className={classes.colorText}>
-                    You haven't submitted any entries in this section
+                    You haven't added any entries in wishlist
                   </span>
                 </h1>
               </div>
             )}
-            <Grid container spacing={4}>
-              {photographies.map((photo) => {
-                return (
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    key={photo._id}
-                    className={classes.grid}
-                  >
-                    <Card className={classesCard.root}>
-                      <CardHeader
-                        avatar={
-                          <Avatar
-                            aria-label="recipe"
-                            className={classesCard.avatar}
-                          ></Avatar>
-                        }
-                        action={
-                          <Button
-                            color="primary"
-                            aria-label="add to wishlist"
-                            onClick={(e) => handleAddVoteList(photo, e)}
-                          >
-                            {props.voteList ? (
-                              props.voteList.some(
-                                (entry) => entry._id === photo._id
-                              ) ? (
-                                <BookmarksIcon />
-                              ) : (
-                                <BookmarkBorderIcon />
-                              )
-                            ) : (
-                              <BookmarksIcon />
+            {!openVotePhoto ? (
+              <>
+                <Grid container spacing={4}>
+                  {photographies.map((photo) => {
+                    return (
+                      <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        key={photo._id}
+                        className={classes.grid}
+                      >
+                        <Card className={classesCard.root}>
+                          <CardHeader
+                            avatar={
+                              <Avatar
+                                aria-label="recipe"
+                                className={classesCard.avatar}
+                              ></Avatar>
+                            }
+                            action={
+                              <Button
+                                color="primary"
+                                aria-label="add to wishlist"
+                                onClick={(e) => handleAddVoteList(photo, e)}
+                              >
+                                {props.voteEntries ? (
+                                  props.voteEntries.some(
+                                    (entry) => entry._id === photo._id
+                                  ) ? (
+                                    <CheckBoxTwoToneIcon />
+                                  ) : (
+                                    <CheckBoxOutlineBlankTwoToneIcon />
+                                  )
+                                ) : (
+                                  <></>
+                                )}
+                              </Button>
+                            }
+                            title={photo.title}
+                            subheader={moment(photo.createdAt).format(
+                              "MMMM D, YYYY"
                             )}
-                          </Button>
-                        }
-                        title={photo.title}
-                        subheader={moment(photo.createdAt).format(
-                          "MMMM D, YYYY"
-                        )}
-                      />
-                      <CardMedia
-                        className={classesCard.media}
-                        image={photo.imageThumbLink}
-                      />
-                      <CardContent>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
+                          />
+                          <CardMedia
+                            className={classesCard.media}
+                            image={photo.imageThumbLink}
+                          />
+                          <CardContent>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              component="p"
+                            >
+                              {photo.description}
+                            </Typography>
+                          </CardContent>
+                          <CardActions disableSpacing></CardActions>
+                        </Card>
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+                <div className={classes.containerText}>
+                  <h1 className={classes.title}>
+                    <br></br>
+                    <span className={classes.colorText}>{voteError}</span>
+                  </h1>
+                </div>
+
+                {photographies.length !== 0 ? (
+                  <>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleClickOpen}
+                    >
+                      Vote!
+                    </Button>
+                    <Dialog
+                      open={dialogbox}
+                      onClose={handleClose}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                    >
+                      <DialogTitle id="alert-dialog-title">
+                        {"Are you sure?"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                          Entry once submitted can neither be edited nor be
+                          removed!
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                          No
+                        </Button>
+                        <Button
+                          onClick={(e) => giveVote("photography", e)}
+                          color="primary"
+                          autoFocus
                         >
-                          {photo.description}
-                        </Typography>
-                      </CardContent>
-                      <CardActions disableSpacing></CardActions>
-                    </Card>
-                  </Grid>
-                );
-              })}
-            </Grid>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={(e) => giveVote("photography", e)}
-            >
-              Vote!
-            </Button>
+                          Yes
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            ) : (
+              <div className={classes.containerText}>
+                <h1 className={classes.title}>
+                  <br></br>
+                  <span className={classes.colorText}>Already voted!</span>
+                </h1>
+              </div>
+            )}
           </TabPanel>
+
           <TabPanel
             value={value}
             index={2}
             dir={theme.direction}
             className={classes.container}
           >
-            {calligraphies.length === 0 && (
+            {independenceDayEntries.length === 0 && !openVoteIndependence && (
               <div className={classes.containerText}>
                 <h1 className={classes.title}>
                   <br></br>
                   <span className={classes.colorText}>
-                    You haven't submitted any entries in this section
+                    You haven't added any entries in wishlist
                   </span>
                 </h1>
               </div>
             )}
-            <Grid container spacing={3}>
-              {calligraphies.map((calli) => {
-                return (
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    key={calli._id}
-                    className={classes.grid}
-                  >
-                    <Card className={classesCard.root}>
-                      <CardHeader
-                        avatar={
-                          <Avatar
-                            aria-label="recipe"
-                            className={classesCard.avatar}
-                          ></Avatar>
-                        }
-                        action={
-                          <IconButton
-                            color="primary"
-                            aria-label="add to wishlist"
-                            // onClick={(calli) => handleWish}
-                          >
-                            {calli.wish ? (
-                              <BookmarksIcon />
-                            ) : (
-                              <BookmarkBorderIcon />
+            {!openVoteIndependence ? (
+              <>
+                <Grid container spacing={3}>
+                  {independenceDayEntries.map((calli) => {
+                    return (
+                      <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        key={calli._id}
+                        className={classes.grid}
+                      >
+                        <Card className={classesCard.root}>
+                          <CardHeader
+                            avatar={
+                              <Avatar
+                                aria-label="recipe"
+                                className={classesCard.avatar}
+                              ></Avatar>
+                            }
+                            action={
+                              <Button
+                                color="primary"
+                                aria-label="add to wishlist"
+                                onClick={(e) => handleAddVoteList(calli, e)}
+                              >
+                                {props.voteEntries ? (
+                                  props.voteEntries.some(
+                                    (entry) => entry._id === calli._id
+                                  ) ? (
+                                    <CheckBoxTwoToneIcon />
+                                  ) : (
+                                    <CheckBoxOutlineBlankTwoToneIcon />
+                                  )
+                                ) : (
+                                  <></>
+                                )}
+                              </Button>
+                            }
+                            title={calli.title}
+                            subheader={moment(calli.createdAt).format(
+                              "MMMM D, YYYY"
                             )}
-                          </IconButton>
-                        }
-                        title={calli.title}
-                        subheader={moment(calli.createdAt).format(
-                          "MMMM D, YYYY"
-                        )}
-                      />
-                      <CardMedia
-                        className={classesCard.media}
-                        image={calli.imageThumbLink}
-                      />
-                      <CardContent>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
+                          />
+                          <CardMedia
+                            className={classesCard.media}
+                            image={calli.imageThumbLink}
+                          />
+                          <CardContent>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              component="p"
+                            >
+                              {calli.description}
+                            </Typography>
+                          </CardContent>
+                          <CardActions disableSpacing></CardActions>
+                        </Card>
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+                <h3>{voteError}</h3>
+                {independenceDayEntries.length !== 0 ? (
+                  <>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleClickOpen}
+                    >
+                      Vote!
+                    </Button>
+                    <Dialog
+                      open={dialogbox}
+                      onClose={handleClose}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                    >
+                      <DialogTitle id="alert-dialog-title">
+                        {"Are you sure?"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                          Entry once submitted can neither be edited nor be
+                          removed!
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                          No
+                        </Button>
+                        <Button
+                          onClick={(e) => giveVote("independence", e)}
+                          color="primary"
+                          autoFocus
                         >
-                          {calli.description}
-                        </Typography>
-                      </CardContent>
-                      <CardActions disableSpacing></CardActions>
-                    </Card>
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </TabPanel>
-
-          <TabPanel
-            value={value}
-            index={3}
-            dir={theme.direction}
-            className={classes.container}
-          >
-            {independenceDayEntries.length === 0 && (
+                          Yes
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            ) : (
               <div className={classes.containerText}>
                 <h1 className={classes.title}>
                   <br></br>
-                  <span className={classes.colorText}>
-                    You haven't submitted any entries in this section
-                  </span>
+                  <span className={classes.colorText}>Already voted!</span>
                 </h1>
               </div>
             )}
-            <Grid container spacing={3}>
-              {independenceDayEntries.map((calli) => {
-                return (
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    key={calli._id}
-                    className={classes.grid}
-                  >
-                    <Card className={classesCard.root}>
-                      <CardHeader
-                        avatar={
-                          <Avatar
-                            aria-label="recipe"
-                            className={classesCard.avatar}
-                          ></Avatar>
-                        }
-                        action={
-                          <Button
-                            color="primary"
-                            aria-label="add to wishlist"
-                            onClick={(e) => handleAddVoteList(calli, e)}
-                          >
-                            {props.voteList ? (
-                              props.voteList.some(
-                                (entry) => entry._id === calli._id
-                              ) ? (
-                                <BookmarksIcon />
-                              ) : (
-                                <BookmarkBorderIcon />
-                              )
-                            ) : (
-                              <BookmarksIcon />
-                            )}
-                          </Button>
-                        }
-                        title={calli.title}
-                        subheader={moment(calli.createdAt).format(
-                          "MMMM D, YYYY"
-                        )}
-                      />
-                      <CardMedia
-                        className={classesCard.media}
-                        image={calli.imageThumbLink}
-                      />
-                      <CardContent>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {calli.description}
-                        </Typography>
-                      </CardContent>
-                      <CardActions disableSpacing></CardActions>
-                    </Card>
-                  </Grid>
-                );
-              })}
-            </Grid>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={(e) => giveVote("independence", e)}
-            >
-              Vote!
-            </Button>
           </TabPanel>
         </SwipeableViews>
       </div>
