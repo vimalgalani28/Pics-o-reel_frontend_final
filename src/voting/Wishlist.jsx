@@ -643,8 +643,7 @@ const AllEntries = (props) => {
                     <h1 className={classes.title}>
                       <br></br>
                       <span className={classes.colorText}>
-                        Select Photographs, paintings & Sketches (Independence
-                        day special) from the entry section!
+                        Select entries from the independence day section!
                       </span>
                       <br></br>
                       <Button
