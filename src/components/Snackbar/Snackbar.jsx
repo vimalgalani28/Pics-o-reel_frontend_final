@@ -4,7 +4,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 
 import useStyles from "./styles";
 
-const CustomizedSnackbar = ({ open, setOpen }) => {
+const CustomizedSnackbar = ({ open, setOpen, title }) => {
   const classes = useStyles();
 
   const handleClose = (event, reason) => {
@@ -27,7 +27,7 @@ const CustomizedSnackbar = ({ open, setOpen }) => {
           elevation={6}
           variant="filled"
         >
-          Entry submitted!!!
+          {title}
         </MuiAlert>
       </Snackbar>
     </div>

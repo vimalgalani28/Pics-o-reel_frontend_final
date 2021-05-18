@@ -127,7 +127,6 @@ const useStylesCard = makeStyles((theme) => ({
 }));
 
 const AllEntries = (props) => {
-  // const [voteLimit, setVoteLimit] = useState(false);
   const [open, setOpen] = useState(false);
   const [openVotePaint, setOpenVotePaint] = useState(
     props.user.hasVotedPainting
@@ -140,37 +139,19 @@ const AllEntries = (props) => {
   );
   const [voteError, setVoteError] = useState("");
 
-  // const handleWish = (entry) => {
-  //   console.log(entry);
-  //   entry.wish = !entry.wish;
-  // };
-
-  // useEffect(() => {
-  //   console.log(props.voteEntries.length);
-  //   if (props.voteEntries.length === 3) {
-  //     setVoteLimit(true);
-  //   } else {
-  //     setVoteLimit(false);
-  //   }
-  // }, [props.voteEntries]);
-
   const giveVote = async (section) => {
+    setOpen(true);
     if (props.voteEntries.length <= 3) {
       setVoteError("");
       const vote = props.voteEntries.map((entry) => {
         return entry._id;
       });
       console.log(vote);
-      //   const options = {
-      //   method: "POST",
-      //   url: "http://localhost:5000oreal.in/user/login",
-      //   data: {
-      //     idToken: data.idToken.rawIdToken,
-      //   },
+
       const token = JSON.parse(localStorage.getItem("picsjwt"));
       const options = {
         method: "POST",
-        url: "http://localhost:5000/vote",
+        url: "https://picsoreel-api-voting.herokuapp.com/vote",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -190,12 +171,15 @@ const AllEntries = (props) => {
           switch (section) {
             case "independence":
               console.log("trued!");
+              props.user.hasVotedIndependence = true;
               setopenVoteIndependence(true);
               break;
             case "painting":
+              props.user.hasVotedPainting = true;
               setOpenVotePaint(true);
               break;
             case "photography":
+              props.user.hasVotedPhotography = true;
               setOpenVotePhoto(true);
               break;
             default:
@@ -207,6 +191,7 @@ const AllEntries = (props) => {
         });
         setDialogbox(false);
         console.log("Deleted All");
+        // setOpen(false);
       } catch (e) {
         console.log("Error", e);
       }
@@ -216,9 +201,9 @@ const AllEntries = (props) => {
   };
 
   const handleAddVoteList = (entry) => {
-    console.log(entry.vote);
+    console.log(entry);
 
-    if (entry.vote) {
+    if (!entry.vote) {
       props.dispatch(addInVote(entry));
     } else {
       props.dispatch(deleteInVote(entry._id));
@@ -253,14 +238,28 @@ const AllEntries = (props) => {
 
   const [dialogbox, setDialogbox] = useState(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (section) => {
+    console.log(section);
+
     if (props.voteEntries.length === 0) {
       setVoteError("Select atleast 1 entry!");
-    } else if (props.voteEntries.length <= 3) {
+    } else if (
+      props.voteEntries.length <= 3 &&
+      props.voteEntries.every(
+        (entry) => entry.section.toLowerCase() === section
+      )
+    ) {
+      console.log(section);
       setVoteError("");
       setDialogbox(true);
+    } else if (
+      !props.voteEntries.every(
+        (entry) => entry.section.toLowerCase() === section
+      )
+    ) {
+      setVoteError("Select entries from 1 section at a time!");
     } else {
-      setVoteError("You can select max 3 entries!");
+      setVoteError("You Can Select Max 3 Entries!");
     }
   };
 
@@ -271,7 +270,11 @@ const AllEntries = (props) => {
   return (
     <div>
       <div className="entries">
-        <CustomizedSnackbar open={open} setOpen={setOpen} />
+        <CustomizedSnackbar
+          open={open}
+          setOpen={setOpen}
+          title="Voting Succesfull!"
+        />
 
         <AppBar position="static" color="default" className={classes.appBar}>
           <Tabs
@@ -376,7 +379,7 @@ const AllEntries = (props) => {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={handleClickOpen}
+                      onClick={(e) => handleClickOpen("painting", e)}
                     >
                       Vote!
                     </Button>
@@ -513,7 +516,7 @@ const AllEntries = (props) => {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={handleClickOpen}
+                      onClick={(e) => handleClickOpen("photography", e)}
                     >
                       Vote!
                     </Button>
@@ -645,7 +648,7 @@ const AllEntries = (props) => {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={handleClickOpen}
+                      onClick={(e) => handleClickOpen("independence", e)}
                     >
                       Vote!
                     </Button>

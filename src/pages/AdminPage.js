@@ -7,7 +7,7 @@ import {
   setLeaderBoardEntries,
 } from "../actions/leaderboard";
 import { Redirect } from "react-router";
-import LeaderBoardTable from "../components/LeaderBoardTable.js/LeaderBoardTable";
+import LeaderBoardTable from "../components/LeaderBoardTable/LeaderBoardTable";
 import {
   AppBar,
   InputBase,
@@ -162,7 +162,7 @@ const AdminPage = (props) => {
 
       const newOptions = {
         method: "GET",
-        url: "http://localhost:5000/entries/leaderboard",
+        url: "https://picsoreel-api-voting.herokuapp.com/voting.herokuapp.com/entries/leaderboard",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
