@@ -27,19 +27,20 @@ const useStyles = makeStyles({
     },
 });
 
-const LeaderBoardTable = ({ sectionEntries, searchText, paintingCheck, photographyCheck }) => {
+const LeaderBoardTable = ({ sectionEntries, searchText, paintingCheck, photographyCheck, independenceCheck }) => {
     const classes = useStyles();
     const visibleEntries = sectionEntries.filter(({ ownerName, section }) => {
-        if (!paintingCheck && !photographyCheck) {
-            return false
-        }
+        let bool = true
         if (!paintingCheck) {
-            return ownerName.toLowerCase().includes(searchText.toLowerCase()) && section === 'Photography'
+            bool = bool && (section !== 'Painting')
         }
         if (!photographyCheck) {
-            return ownerName.toLowerCase().includes(searchText.toLowerCase()) && section === 'Painting'
+            bool = bool && (section !== 'Photography')
         }
-        return ownerName.toLowerCase().includes(searchText.toLowerCase()) && (section === 'Painting' || section === 'Photography')
+        if (!independenceCheck) {
+            bool = bool && (section !== "Independence")
+        }
+        return ownerName.toLowerCase().includes(searchText.toLowerCase()) && bool && (section !== 'Calligraphy')
     })
     const compare = (a, b) => {
         if (a.voteCount < b.voteCount) {
