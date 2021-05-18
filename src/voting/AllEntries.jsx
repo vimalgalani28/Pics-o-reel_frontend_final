@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -21,6 +21,8 @@ import IconButton from "@material-ui/core/IconButton";
 import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import { connect } from "react-redux";
 import { addInWishlist, removeExpense } from "../actions/wishlist";
+import ImageModal from "./ImageModal/ImageModal";
+import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -124,6 +126,8 @@ const AllEntries = (props) => {
   // const [photographs, setPhotograph] = useState([]);
   // const [independence, setIndependence] = useState([]);
   // const [calligraphy, setCalligraphy] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [image, setImage] = useState("");
 
   const handleAddWishlist = (entry) => {
     console.log(entry.wish);
@@ -164,316 +168,363 @@ const AllEntries = (props) => {
   };
 
   return (
-    <div>
-      <div className="entries">
-        <AppBar position="static" color="default" className={classes.appBar}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            variant="scrollable"
-            scrollButtons="on"
-            textColor="primary"
+    <>
+      <div>
+        <div className="entries">
+          <AppBar position="static" color="default" className={classes.appBar}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="primary"
+              variant="scrollable"
+              scrollButtons="on"
+              textColor="primary"
+            >
+              <Tab label="Painting/Sketches" {...a11yProps(0)} />
+              <Tab label="Photography" {...a11yProps(1)} />
+              <Tab label="Others" {...a11yProps(2)} />
+              <Tab label="Independence Day Special" {...a11yProps(3)} />
+            </Tabs>
+          </AppBar>
+          <SwipeableViews
+            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={value}
+            onChangeIndex={handleChangeIndex}
           >
-            <Tab label="Painting/Sketches" {...a11yProps(0)} />
-            <Tab label="Photography" {...a11yProps(1)} />
-            <Tab label="Others" {...a11yProps(2)} />
-            <Tab label="Independence Day Special" {...a11yProps(3)} />
-          </Tabs>
-        </AppBar>
-        <SwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel
-            value={value}
-            index={0}
-            dir={theme.direction}
-            className={classes.container}
-          >
-            {paintings.length === 0 && (
-              <div className={classes.containerText}>
-                <h1 className={classes.title}>
-                  <br></br>
-                  <span className={classes.colorText}>
-                    Something went wrong!
-                  </span>
-                </h1>
-              </div>
-            )}
-            <Grid container spacing={4}>
-              {paintings.map((paint) => {
-                return (
-                  <Grid item xs={12} sm={6} key={paint._id}>
-                    <Card className={classesCard.root}>
-                      <CardHeader
-                        avatar={
-                          <Avatar
-                            aria-label="recipe"
-                            className={classesCard.avatar}
-                          ></Avatar>
-                        }
-                        action={
-                          <Button
-                            color="primary"
-                            aria-label="add to wishlist"
-                            onClick={(e) => handleAddWishlist(paint, e)}
+            <TabPanel
+              value={value}
+              index={0}
+              dir={theme.direction}
+              className={classes.container}
+            >
+              {paintings.length === 0 && (
+                <div className={classes.containerText}>
+                  <h1 className={classes.title}>
+                    <br></br>
+                    <span className={classes.colorText}>
+                      Something went wrong!
+                    </span>
+                  </h1>
+                </div>
+              )}
+              <Grid container spacing={4}>
+                {paintings.map((paint) => {
+                  return (
+                    <Grid item xs={12} sm={6} key={paint._id}>
+                      <Card className={classesCard.root}>
+                        <CardHeader
+                          avatar={
+                            <Avatar
+                              aria-label="recipe"
+                              className={classesCard.avatar}
+                            ></Avatar>
+                          }
+                          action={
+                            <Button
+                              color="primary"
+                              aria-label="add to wishlist"
+                              onClick={(e) => handleAddWishlist(paint, e)}
+                            >
+                              {props.myWishEntries.some(
+                                (entry) => entry._id === paint._id
+                              ) ? (
+                                <BookmarksIcon />
+                              ) : (
+                                <BookmarkBorderIcon />
+                              )}
+                            </Button>
+                          }
+                          title={paint.title}
+                          subheader={moment(paint.createdAt).format(
+                            "MMMM D, YYYY"
+                          )}
+                        />
+                        <CardMedia
+                          className={classesCard.media}
+                          image={paint.imageThumbLink}
+                        />
+                        <CardContent>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
                           >
-                            {props.myWishEntries.some(
-                              (entry) => entry._id === paint._id
-                            ) ? (
-                              <BookmarksIcon />
-                            ) : (
-                              <BookmarkBorderIcon />
-                            )}
-                          </Button>
-                        }
-                        title={paint.title}
-                        subheader={moment(paint.createdAt).format(
-                          "MMMM D, YYYY"
-                        )}
-                      />
-                      <CardMedia
-                        className={classesCard.media}
-                        image={paint.imageThumbLink}
-                      />
-                      <CardContent>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {paint.description}
-                        </Typography>
-                      </CardContent>
-                      <CardActions disableSpacing></CardActions>
-                    </Card>
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </TabPanel>
-          <TabPanel
-            value={value}
-            index={1}
-            dir={theme.direction}
-            className={classes.container}
-          >
-            {photographies.length === 0 && (
-              <div className={classes.containerText}>
-                <h1 className={classes.title}>
-                  <br></br>
-                  <span className={classes.colorText}>
-                    Something went wrong!
-                  </span>
-                </h1>
-              </div>
-            )}
-            <Grid container spacing={4}>
-              {photographies.map((photo) => {
-                return (
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    key={photo._id}
-                    className={classes.grid}
-                  >
-                    <Card className={classesCard.root}>
-                      <CardHeader
-                        avatar={
-                          <Avatar
-                            aria-label="recipe"
-                            className={classesCard.avatar}
-                          ></Avatar>
-                        }
-                        action={
+                            {paint.description}
+                          </Typography>
+                        </CardContent>
+                        <CardActions disableSpacing>
                           <IconButton
-                            color="primary"
-                            aria-label="add to wishlist"
-                            onClick={(e) => handleAddWishlist(photo, e)}
+                            onClick={() => {
+                              setOpen(true);
+                              setImage(paint.imageBucketLink);
+                            }}
                           >
-                            {photo.wish ? (
-                              <BookmarksIcon />
-                            ) : (
-                              <BookmarkBorderIcon />
-                            )}
+                            <VisibilityOutlinedIcon
+                              style={{ fontSize: "2.4rem", fontWeight: "bold" }}
+                            />
                           </IconButton>
-                        }
-                        title={photo.title}
-                        subheader={moment(photo.createdAt).format(
-                          "MMMM D, YYYY"
-                        )}
-                      />
-                      <CardMedia
-                        className={classesCard.media}
-                        image={photo.imageThumbLink}
-                      />
-                      <CardContent>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {photo.description}
-                        </Typography>
-                      </CardContent>
-                      <CardActions disableSpacing></CardActions>
-                    </Card>
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </TabPanel>
-          <TabPanel
-            value={value}
-            index={2}
-            dir={theme.direction}
-            className={classes.container}
-          >
-            {calligraphies.length === 0 && (
-              <div className={classes.containerText}>
-                <h1 className={classes.title}>
-                  <br></br>
-                  <span className={classes.colorText}>
-                    Something went wrong!
-                  </span>
-                </h1>
-              </div>
-            )}
-            <Grid container spacing={3}>
-              {calligraphies.map((calli) => {
-                return (
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    key={calli._id}
-                    className={classes.grid}
-                  >
-                    <Card className={classesCard.root}>
-                      <CardHeader
-                        avatar={
-                          <Avatar
-                            aria-label="recipe"
-                            className={classesCard.avatar}
-                          ></Avatar>
-                        }
-                        // action={
-                        //   <IconButton
-                        //     color="primary"
-                        //     aria-label="add to wishlist"
-                        //     // onClick={(calli) => handleWish}
-                        //   >
-                        //     {calli.wish ? (
-                        //       <BookmarksIcon />
-                        //     ) : (
-                        //       <BookmarkBorderIcon />
-                        //     )}
-                        //   </IconButton>
-                        // }
-                        title={calli.title}
-                        subheader={moment(calli.createdAt).format(
-                          "MMMM D, YYYY"
-                        )}
-                      />
-                      <CardMedia
-                        className={classesCard.media}
-                        image={calli.imageThumbLink}
-                      />
-                      <CardContent>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {calli.description}
-                        </Typography>
-                      </CardContent>
-                      <CardActions disableSpacing></CardActions>
-                    </Card>
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </TabPanel>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </TabPanel>
+            <TabPanel
+              value={value}
+              index={1}
+              dir={theme.direction}
+              className={classes.container}
+            >
+              {photographies.length === 0 && (
+                <div className={classes.containerText}>
+                  <h1 className={classes.title}>
+                    <br></br>
+                    <span className={classes.colorText}>
+                      Something went wrong!
+                    </span>
+                  </h1>
+                </div>
+              )}
+              <Grid container spacing={4}>
+                {photographies.map((photo) => {
+                  return (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      key={photo._id}
+                      className={classes.grid}
+                    >
+                      <Card className={classesCard.root}>
+                        <CardHeader
+                          avatar={
+                            <Avatar
+                              aria-label="recipe"
+                              className={classesCard.avatar}
+                            ></Avatar>
+                          }
+                          action={
+                            <IconButton
+                              color="primary"
+                              aria-label="add to wishlist"
+                              onClick={(e) => handleAddWishlist(photo, e)}
+                            >
+                              {photo.wish ? (
+                                <BookmarksIcon />
+                              ) : (
+                                <BookmarkBorderIcon />
+                              )}
+                            </IconButton>
+                          }
+                          title={photo.title}
+                          subheader={moment(photo.createdAt).format(
+                            "MMMM D, YYYY"
+                          )}
+                        />
+                        <CardMedia
+                          className={classesCard.media}
+                          image={photo.imageThumbLink}
+                        />
+                        <CardContent>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                          >
+                            {photo.description}
+                          </Typography>
+                        </CardContent>
+                        <CardActions disableSpacing>
+                          <IconButton
+                            onClick={() => {
+                              setOpen(true);
+                              setImage(photo.imageBucketLink);
+                            }}
+                          >
+                            <VisibilityOutlinedIcon
+                              style={{ fontSize: "2.4rem", fontWeight: "bold" }}
+                            />
+                          </IconButton>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </TabPanel>
+            <TabPanel
+              value={value}
+              index={2}
+              dir={theme.direction}
+              className={classes.container}
+            >
+              {calligraphies.length === 0 && (
+                <div className={classes.containerText}>
+                  <h1 className={classes.title}>
+                    <br></br>
+                    <span className={classes.colorText}>
+                      Something went wrong!
+                    </span>
+                  </h1>
+                </div>
+              )}
+              <Grid container spacing={3}>
+                {calligraphies.map((calli) => {
+                  return (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      key={calli._id}
+                      className={classes.grid}
+                    >
+                      <Card className={classesCard.root}>
+                        <CardHeader
+                          avatar={
+                            <Avatar
+                              aria-label="recipe"
+                              className={classesCard.avatar}
+                            ></Avatar>
+                          }
+                          // action={
+                          //   <IconButton
+                          //     color="primary"
+                          //     aria-label="add to wishlist"
+                          //     // onClick={(calli) => handleWish}
+                          //   >
+                          //     {calli.wish ? (
+                          //       <BookmarksIcon />
+                          //     ) : (
+                          //       <BookmarkBorderIcon />
+                          //     )}
+                          //   </IconButton>
+                          // }
+                          title={calli.title}
+                          subheader={moment(calli.createdAt).format(
+                            "MMMM D, YYYY"
+                          )}
+                        />
+                        <CardMedia
+                          className={classesCard.media}
+                          image={calli.imageThumbLink}
+                        />
+                        <CardContent>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                          >
+                            {calli.description}
+                          </Typography>
+                        </CardContent>
+                        <CardActions disableSpacing>
+                          <IconButton
+                            onClick={() => {
+                              setOpen(true);
+                              setImage(calli.imageBucketLink);
+                            }}
+                          >
+                            <VisibilityOutlinedIcon
+                              style={{ fontSize: "2.4rem", fontWeight: "bold" }}
+                            />
+                          </IconButton>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </TabPanel>
 
-          <TabPanel
-            value={value}
-            index={3}
-            dir={theme.direction}
-            className={classes.container}
-          >
-            {independenceDayEntries.length === 0 && (
-              <div className={classes.containerText}>
-                <h1 className={classes.title}>
-                  <br></br>
-                  <span className={classes.colorText}>
-                    Something went wrong!
-                  </span>
-                </h1>
-              </div>
-            )}
-            <Grid container spacing={3}>
-              {independenceDayEntries.map((calli) => {
-                return (
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    key={calli._id}
-                    className={classes.grid}
-                  >
-                    <Card className={classesCard.root}>
-                      <CardHeader
-                        avatar={
-                          <Avatar
-                            aria-label="recipe"
-                            className={classesCard.avatar}
-                          ></Avatar>
-                        }
-                        action={
-                          <IconButton
-                            color="primary"
-                            aria-label="add to wishlist"
-                            onClick={(e) => handleAddWishlist(calli, e)}
+            <TabPanel
+              value={value}
+              index={3}
+              dir={theme.direction}
+              className={classes.container}
+            >
+              {independenceDayEntries.length === 0 && (
+                <div className={classes.containerText}>
+                  <h1 className={classes.title}>
+                    <br></br>
+                    <span className={classes.colorText}>
+                      Something went wrong!
+                    </span>
+                  </h1>
+                </div>
+              )}
+              <Grid container spacing={3}>
+                {independenceDayEntries.map((calli) => {
+                  return (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      key={calli._id}
+                      className={classes.grid}
+                    >
+                      <Card className={classesCard.root}>
+                        <CardHeader
+                          avatar={
+                            <Avatar
+                              aria-label="recipe"
+                              className={classesCard.avatar}
+                            ></Avatar>
+                          }
+                          action={
+                            <IconButton
+                              color="primary"
+                              aria-label="add to wishlist"
+                              onClick={(e) => handleAddWishlist(calli, e)}
+                            >
+                              {calli.wish ? (
+                                <BookmarksIcon />
+                              ) : (
+                                <BookmarkBorderIcon />
+                              )}
+                            </IconButton>
+                          }
+                          title={calli.title}
+                          subheader={moment(calli.createdAt).format(
+                            "MMMM D, YYYY"
+                          )}
+                        />
+                        <CardMedia
+                          className={classesCard.media}
+                          image={calli.imageThumbLink}
+                        />
+                        <CardContent>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
                           >
-                            {calli.wish ? (
-                              <BookmarksIcon />
-                            ) : (
-                              <BookmarkBorderIcon />
-                            )}
+                            {calli.description}
+                          </Typography>
+                        </CardContent>
+                        <CardActions disableSpacing>
+                          <IconButton
+                            onClick={() => {
+                              setOpen(true);
+                              setImage(calli.imageBucketLink);
+                            }}
+                          >
+                            <VisibilityOutlinedIcon
+                              style={{ fontSize: "2.4rem", fontWeight: "bold" }}
+                            />
                           </IconButton>
-                        }
-                        title={calli.title}
-                        subheader={moment(calli.createdAt).format(
-                          "MMMM D, YYYY"
-                        )}
-                      />
-                      <CardMedia
-                        className={classesCard.media}
-                        image={calli.imageThumbLink}
-                      />
-                      <CardContent>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {calli.description}
-                        </Typography>
-                      </CardContent>
-                      <CardActions disableSpacing></CardActions>
-                    </Card>
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </TabPanel>
-        </SwipeableViews>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </TabPanel>
+          </SwipeableViews>
+        </div>
       </div>
-    </div>
+      <ImageModal image={image} open={open} setOpen={setOpen} />
+    </>
   );
 };
 
