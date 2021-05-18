@@ -814,6 +814,7 @@ const AllEntries = (props) => {
           )}
         </div>
       </div>
+
       <ImageModal image={image} open={openImage} setOpen={setOpenImage} />
     </>
   );
