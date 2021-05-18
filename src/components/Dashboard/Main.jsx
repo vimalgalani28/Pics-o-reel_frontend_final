@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Collapse } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+// import Clock from "../Timer/Timer";
 // import { IconButton, Collapse, Button } from "@material-ui/core";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 // import { Link as Scroll } from "react-scroll";
@@ -74,7 +75,7 @@ const Main = (props) => {
   useEffect(() => {
     setChecked(true);
   }, []);
-
+  // const date = new Date();
   return (
     <>
       <div className={classes.full}>
