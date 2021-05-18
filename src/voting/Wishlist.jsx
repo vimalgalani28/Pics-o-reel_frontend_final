@@ -425,13 +425,16 @@ const AllEntries = (props) => {
                     </div>
                     {paintings.length !== 0 ? (
                       <>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={(e) => handleClickOpen("painting", e)}
-                        >
-                          Vote!
-                        </Button>
+                        <div className={classes.containerText}>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={(e) => handleClickOpen("independence", e)}
+                          >
+                            Vote!
+                          </Button>
+                        </div>
+
                         <Dialog
                           open={dialogbox}
                           onClose={handleClose}
@@ -583,13 +586,15 @@ const AllEntries = (props) => {
 
                     {photographies.length !== 0 ? (
                       <>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={(e) => handleClickOpen("photography", e)}
-                        >
-                          Vote!
-                        </Button>
+                        <div className={classes.containerText}>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={(e) => handleClickOpen("independence", e)}
+                          >
+                            Vote!
+                          </Button>
+                        </div>
                         <Dialog
                           open={dialogbox}
                           onClose={handleClose}
@@ -743,13 +748,16 @@ const AllEntries = (props) => {
 
                     {independenceDayEntries.length !== 0 ? (
                       <>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={(e) => handleClickOpen("independence", e)}
-                        >
-                          Vote!
-                        </Button>
+                        <div className={classes.containerText}>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={(e) => handleClickOpen("independence", e)}
+                          >
+                            Vote!
+                          </Button>
+                        </div>
+
                         <Dialog
                           open={dialogbox}
                           onClose={handleClose}
