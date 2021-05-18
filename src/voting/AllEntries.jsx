@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -21,6 +21,9 @@ import IconButton from "@material-ui/core/IconButton";
 import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import { connect } from "react-redux";
 import { addInWishlist, removeExpense } from "../actions/wishlist";
+import ImageModal from "./ImageModal/ImageModal";
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -124,6 +127,8 @@ const AllEntries = (props) => {
   // const [photographs, setPhotograph] = useState([]);
   // const [independence, setIndependence] = useState([]);
   // const [calligraphy, setCalligraphy] = useState([]);
+  const [open, setOpen] = useState(false)
+    const [image, setImage] = useState('')
 
   const handleAddWishlist = (entry) => {
     console.log(entry.wish);
@@ -164,6 +169,7 @@ const AllEntries = (props) => {
   };
 
   return (
+    <>
     <div>
       <div className="entries">
         <AppBar position="static" color="default" className={classes.appBar}>
@@ -247,7 +253,14 @@ const AllEntries = (props) => {
                           {paint.description}
                         </Typography>
                       </CardContent>
-                      <CardActions disableSpacing></CardActions>
+                      <CardActions disableSpacing>
+                        <IconButton onClick={()=>{
+                          setOpen(true)
+                          setImage(paint.imageBucketLink)
+                        }}>
+                          <FullscreenIcon style={{fontSize: '2.4rem', fontWeight: 'bold'}} />
+                        </IconButton>
+                      </CardActions>
                     </Card>
                   </Grid>
                 );
@@ -319,7 +332,14 @@ const AllEntries = (props) => {
                           {photo.description}
                         </Typography>
                       </CardContent>
-                      <CardActions disableSpacing></CardActions>
+                      <CardActions disableSpacing>
+                      <IconButton onClick={()=>{
+                          setOpen(true)
+                          setImage(photo.imageBucketLink)
+                        }}>
+                          <FullscreenIcon style={{fontSize: '2.4rem', fontWeight: 'bold'}} />
+                        </IconButton>
+                      </CardActions>
                     </Card>
                   </Grid>
                 );
@@ -391,7 +411,14 @@ const AllEntries = (props) => {
                           {calli.description}
                         </Typography>
                       </CardContent>
-                      <CardActions disableSpacing></CardActions>
+                      <CardActions disableSpacing>
+                      <IconButton onClick={()=>{
+                          setOpen(true)
+                          setImage(calli.imageBucketLink)
+                        }}>
+                          <FullscreenIcon style={{fontSize: '2.4rem', fontWeight: 'bold'}} />
+                        </IconButton>
+                      </CardActions>
                     </Card>
                   </Grid>
                 );
@@ -464,7 +491,14 @@ const AllEntries = (props) => {
                           {calli.description}
                         </Typography>
                       </CardContent>
-                      <CardActions disableSpacing></CardActions>
+                      <CardActions disableSpacing>
+                      <IconButton onClick={()=>{
+                          setOpen(true)
+                          setImage(calli.imageBucketLink)
+                        }}>
+                          <FullscreenIcon style={{fontSize: '2.4rem', fontWeight: 'bold'}} />
+                        </IconButton>
+                      </CardActions>
                     </Card>
                   </Grid>
                 );
@@ -474,6 +508,8 @@ const AllEntries = (props) => {
         </SwipeableViews>
       </div>
     </div>
+    <ImageModal image={image} open={open} setOpen={setOpen}/>
+    </>
   );
 };
 
