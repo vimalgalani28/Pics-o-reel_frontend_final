@@ -15,7 +15,7 @@ function Navigation(props) {
     const token = JSON.parse(localStorage.getItem("picsjwt"));
     const options = {
       method: "POST",
-      url: "http://localhost:5000/user/logout",
+      url: "https://picsoreel-api-voting.herokuapp.com/user/logout",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

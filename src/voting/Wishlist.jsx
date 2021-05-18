@@ -151,7 +151,7 @@ const AllEntries = (props) => {
       const token = JSON.parse(localStorage.getItem("picsjwt"));
       const options = {
         method: "POST",
-        url: "http://localhost:5000/vote",
+        url: "https://picsoreel-api-voting.herokuapp.com/vote",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -203,7 +203,7 @@ const AllEntries = (props) => {
   const handleAddVoteList = (entry) => {
     console.log(entry);
 
-    if (entry.vote) {
+    if (!entry.vote) {
       props.dispatch(addInVote(entry));
     } else {
       props.dispatch(deleteInVote(entry._id));

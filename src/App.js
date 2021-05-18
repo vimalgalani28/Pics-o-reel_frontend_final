@@ -12,7 +12,7 @@ const App = (props) => {
     const fetchUser = async (token) => {
       const options = {
         method: "GET",
-        url: "http://localhost:5000/user",
+        url: "https://picsoreel-api-voting.herokuapp.com/user",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -25,7 +25,7 @@ const App = (props) => {
           props.dispatch(loginUser(user));
           const allEntriesAPI = {
             method: "GET",
-            url: "http://localhost:5000/entries/allentries",
+            url: "https://picsoreel-api-voting.herokuapp.com/entries/allentries",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
@@ -33,7 +33,7 @@ const App = (props) => {
           };
 
           const res2 = await axios(allEntriesAPI);
-          // console.log(res.data);
+          console.log(res2.data);
           // setAllSubEntries(res.data);
 
           const shuffleEntries = (array) => {
