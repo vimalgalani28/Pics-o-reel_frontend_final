@@ -50,22 +50,22 @@ const MyModal = ({ open, handleClose, logoutHandler }) => {
             </span>
             <span onClick={handleClose} style={{ margin: "5px auto" }}>
               <NavLink
-                to="/myEntries"
+                to="/entries"
                 exact={true}
                 activeClassName="active"
                 className="links"
               >
-                My Entries
+                Entries
               </NavLink>
             </span>
             <span onClick={handleClose} style={{ margin: "5px auto" }}>
               <NavLink
-                to="/create"
+                to="/wishlist"
                 exact={true}
                 activeClassName="active"
                 className="links"
               >
-                Submit Entry
+                Wishlist
               </NavLink>
             </span>
             <span
