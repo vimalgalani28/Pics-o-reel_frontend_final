@@ -1,15 +1,15 @@
 /* @import url("https://fonts.googleapis.com/css?family=Gilda Display"); */
+@font-face {
+  font-family: myFirstFont;
+  src: url(GildaDisplay-Regular.ttf);
+}
+
 #root,
 body,
 html {
   height: 100%;
   margin: 0 !important;
-  font-family: "Gilda Display", Sans-serif;
-}
-
-@font-face {
   font-family: myFirstFont;
-  src: url(GildaDisplay-Regular.ttf);
 }
 
 *,
@@ -26,6 +26,13 @@ html {
   /* background-repeat: no-repeat; */
   min-height: 100vh;
   background-size: cover;
+}
+
+h1,
+h2,
+h3 {
+  font-family: myFirstFont !important;
+  font-weight: 700px;
 }
 
 .entries {
@@ -45,4 +52,10 @@ html {
   background-size: cover;
 
   min-height: 100vh;
+}
+
+p {
+  font-size: 18px;
+  word-spacing: 6px;
+  line-height: 30px;
 }
