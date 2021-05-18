@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Collapse } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 // import Clock from "../Timer/Timer";
-// import { IconButton, Collapse, Button } from "@material-ui/core";
-// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-// import { Link as Scroll } from "react-scroll";
-// import { useHistory } from "react-router-dom";
+import { IconButton, Collapse, Button } from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Link as Scroll } from "react-scroll";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   full: {
@@ -69,8 +68,8 @@ const useStyles = makeStyles((theme) => ({
 const Main = (props) => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
-  // const history = useHistory();
-  // const handleClick = () => history.push("/create");
+  const history = useHistory();
+  const handleClick = () => history.push("/create");
 
   useEffect(() => {
     setChecked(true);
@@ -101,7 +100,7 @@ const Main = (props) => {
               </p>
             </h1>
 
-            {/*   <Scroll to="header" smooth={true}>
+            <Scroll to="header" smooth={true}>
               <IconButton>
                 <ExpandMoreIcon
                   style={{ fontSize: "70", color: "hsl(42, 78%, 60%)" }}
@@ -110,8 +109,8 @@ const Main = (props) => {
             </Scroll>
             <br></br>
             <Button variant="contained" color="primary" onClick={handleClick}>
-              Submit Your Entry
-  </Button>*/}
+              Entries
+            </Button>
           </div>
         </Collapse>
       </div>

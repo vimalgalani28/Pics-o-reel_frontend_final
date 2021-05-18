@@ -429,7 +429,7 @@ const AllEntries = (props) => {
                           <Button
                             variant="contained"
                             color="primary"
-                            onClick={(e) => handleClickOpen("independence", e)}
+                            onClick={(e) => handleClickOpen("painting", e)}
                           >
                             Vote!
                           </Button>
@@ -590,7 +590,7 @@ const AllEntries = (props) => {
                           <Button
                             variant="contained"
                             color="primary"
-                            onClick={(e) => handleClickOpen("independence", e)}
+                            onClick={(e) => handleClickOpen("photography", e)}
                           >
                             Vote!
                           </Button>

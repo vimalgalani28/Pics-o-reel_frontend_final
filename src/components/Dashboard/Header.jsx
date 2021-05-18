@@ -20,7 +20,7 @@ const Header = () => {
                   lineHeight: 1.7,
                 }}
               >
-                <li>Add entries to the wishlist which please you.</li>
+                <li>Add entries to the wishlist, which please you.</li>
                 <li>
                   Once added, you can start voting section wise in the wishlist.
                 </li>
@@ -29,7 +29,7 @@ const Header = () => {
             <span className="number">1</span>
           </article>
           <article className="timeline-item" style={{ textAlign: "right" }}>
-            <h3>Vote Limits</h3>
+            <h3>Prizes</h3>
             <p>
               Top 3 Paintings/Sketches and top 3 Photographs will be awarded and
               featured in our annual magazine: <b>“Pictoreal”</b>.
@@ -37,7 +37,7 @@ const Header = () => {
             <span className="number">2</span>
           </article>
           <article className="timeline-item">
-            <h3>Prizes</h3>
+            <h3>Vote Limits</h3>
             <p>
               <li>
                 <b>For Photography or Sketching & Painting Category:</b> You can
