@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import axios from "axios";
 import { loginUser } from "../actions/user";
-import { setAllEntries } from "../actions/allEntry";
+import { setMyEntries } from "../actions/myEntry";
 
 const useStyles = makeStyles((theme) => ({
   full: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     minHeight: "100vh",
-    fontFamily: "'Gilda Display', Sans-serif",
+    // fontFamily: "'Montserrat', sans-serif"
   },
 
   colorText: {
@@ -74,7 +74,7 @@ const LoginPage = (props) => {
     }
     const options = {
       method: "POST",
-      url: "http://localhost:5000/user/login",
+      url: "https://picsoreel-api-voting.herokuapp.com/user/login",
       data: {
         idToken: data.idToken.rawIdToken,
       },
@@ -87,36 +87,17 @@ const LoginPage = (props) => {
         localStorage.setItem("picsjwt", JSON.stringify(token));
         props.dispatch(loginUser(user));
         // setLoginError("");
-        const allEntriesAPI = {
+        const newOptions = {
           method: "GET",
-          url: "http://localhost:5000/entries/allentries",
+          url: "https://picsoreel-api-voting.herokuapp.com/entry",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         };
-
-        const res2 = await axios(allEntriesAPI);
-        // console.log(res.data);
-        // setAllSubEntries(res.data);
-
-        const shuffleEntries = (array) => {
-          var currentIndex = array.length,
-            temporaryValue,
-            randomIndex;
-          while (0 !== currentIndex) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-          }
-          return array;
-        };
-        const shuffledEntries = shuffleEntries(res2.data);
-
+        const res2 = await axios(newOptions);
         if (!res2.data.error) {
-          props.dispatch(setAllEntries(shuffledEntries));
+          props.dispatch(setMyEntries(res2.data));
         }
       } else {
         if (res.data.status === 401) {

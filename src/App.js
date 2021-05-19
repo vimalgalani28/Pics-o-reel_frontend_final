@@ -3,8 +3,8 @@ import AppRouter from "./router/AppRouter";
 import axios from "axios";
 import { loginUser } from "./actions/user";
 import { connect } from "react-redux";
+import { setMyEntries } from "./actions/myEntry";
 import { XlviLoader } from "react-awesome-loaders";
-import { setAllEntries } from "./actions/allEntry";
 
 const App = (props) => {
   const [hasLoadedUser, setHasLoadedUser] = useState(false);
@@ -12,7 +12,7 @@ const App = (props) => {
     const fetchUser = async (token) => {
       const options = {
         method: "GET",
-        url: "http://localhost:5000/user",
+        url: "https://picsoreel-api-voting.herokuapp.com/user",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -23,36 +23,17 @@ const App = (props) => {
         if (!res.data.error) {
           const user = res.data.user;
           props.dispatch(loginUser(user));
-          const allEntriesAPI = {
+          const newOptions = {
             method: "GET",
-            url: "http://localhost:5000/entries/allentries",
+            url: "https://picsoreel-api-voting.herokuapp.com/entry",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
           };
-
-          const res2 = await axios(allEntriesAPI);
-          console.log(res2.data);
-          // setAllSubEntries(res.data);
-
-          const shuffleEntries = (array) => {
-            var currentIndex = array.length,
-              temporaryValue,
-              randomIndex;
-            while (0 !== currentIndex) {
-              randomIndex = Math.floor(Math.random() * currentIndex);
-              currentIndex -= 1;
-              temporaryValue = array[currentIndex];
-              array[currentIndex] = array[randomIndex];
-              array[randomIndex] = temporaryValue;
-            }
-            return array;
-          };
-          const shuffledEntries = shuffleEntries(res2.data);
-
+          const res2 = await axios(newOptions);
           if (!res2.data.error) {
-            props.dispatch(setAllEntries(shuffledEntries));
+            props.dispatch(setMyEntries(res2.data));
           }
         }
       } catch (e) {

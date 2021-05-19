@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 const NotFoundPage = () => {
   const history = useHistory();
-  const handleClick = () => history.push("/");
+  const handleClick = () => history.push("/dashboard");
   const useStyles = makeStyles((theme) => ({
     appBar: {
       margin: "0 auto",

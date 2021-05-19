@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Clock from "../Timer/Timer";
-import { Collapse } from "@material-ui/core";
-// import { IconButton, Collapse, Button } from "@material-ui/core";
-// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-// import { Link as Scroll } from "react-scroll";
-// import { useHistory } from "react-router-dom";
+import { IconButton, Collapse, Button } from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Link as Scroll } from "react-scroll";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   full: {
@@ -13,13 +11,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     minHeight: "100vh",
-    fontFamily: "myFirstFont",
+    // fontFamily: "'Montserrat', sans-serif"
   },
 
   colorText: {
-    lineHeight: "1.5em",
-    fontSize: "647%",
-    fontFamily: "myFirstFont",
+    fontSize: "500%",
     fontWeight: "700",
     fontStyle: "normal",
     color: "hsl(43, 89%, 70%)",
@@ -33,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
   title: {
     color: "#fff",
     fontSize: "2rem",
-    fontFamily: "myFirstFont",
     fontWeight: 500,
     fontStyle: "italic",
     [theme.breakpoints.up("sm")]: {
@@ -69,14 +64,13 @@ const useStyles = makeStyles((theme) => ({
 const Main = (props) => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
-  // const history = useHistory();
-  // const handleClick = () => history.push("/entries");
+  const history = useHistory();
+  const handleClick = () => history.push("/create");
 
   useEffect(() => {
     setChecked(true);
   }, []);
-  const date = "Wed May 20 2021 9:00:00 GMT+0530 (India Standard Time)";
-  console.log(date);
+
   return (
     <>
       <div className={classes.full}>
@@ -86,14 +80,6 @@ const Main = (props) => {
           collapsedHeight={50}
         >
           <div className={classes.container}>
-            <img
-              width="200"
-              height="80"
-              src="https://hrkit.rometheme.net/arthoz/wp-content/uploads/sites/2/2021/01/photo-1-1.png"
-              class="attachment-full size-full"
-              alt=""
-              loading="lazy"
-            ></img>
             <h1 className={classes.title}>
               Pictoreal presents<br></br>
               <span className={classes.colorText}>Pics-o-reel</span>
@@ -102,7 +88,7 @@ const Main = (props) => {
               </p>
             </h1>
 
-            {/*  <Scroll to="header" smooth={true}>
+            <Scroll to="header" smooth={true}>
               <IconButton>
                 <ExpandMoreIcon
                   style={{ fontSize: "70", color: "hsl(42, 78%, 60%)" }}
@@ -111,12 +97,9 @@ const Main = (props) => {
             </Scroll>
             <br></br>
             <Button variant="contained" color="primary" onClick={handleClick}>
-              Entries
-  </Button>*/}
+              Submit Your Entry
+            </Button>
           </div>
-          <br />
-          <br />
-          <Clock deadline={date} />
         </Collapse>
       </div>
     </>
