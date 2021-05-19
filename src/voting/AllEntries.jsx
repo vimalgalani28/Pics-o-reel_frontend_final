@@ -22,6 +22,7 @@ import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import { connect } from "react-redux";
 import { addInWishlist, removeExpense } from "../actions/wishlist";
 import ImageModal from "./ImageModal/ImageModal";
+import TopButton from "../components/TopButton/TopButton";
 // import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -163,10 +164,20 @@ const AllEntries = (props) => {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+  
+  window.onscroll = function() {scrollFunction()};
+  const [button, setButton] = useState(false)
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      setButton(true)
+    } else {
+      setButton(false)
+    }
+  }
 
   return (
     <>
-      <div>
+      <div id="top">
         <div className="entries">
           <AppBar position="static" color="default" className={classes.appBar}>
             <Tabs
@@ -221,14 +232,14 @@ const AllEntries = (props) => {
                               ) ? (
                                 <BookmarksIcon
                                   style={{
-                                    fontSize: "3rem",
+                                    fontSize: "2.2rem",
                                     fontWeight: "bold",
                                   }}
                                 />
                               ) : (
                                 <BookmarkBorderIcon
                                   style={{
-                                    fontSize: "3rem",
+                                    fontSize: "2.2rem",
                                     fontWeight: "bold",
                                   }}
                                 />
@@ -299,14 +310,14 @@ const AllEntries = (props) => {
                               {photo.wish ? (
                                 <BookmarksIcon
                                   style={{
-                                    fontSize: "3rem",
+                                    fontSize: "2.2rem",
                                     fontWeight: "bold",
                                   }}
                                 />
                               ) : (
                                 <BookmarkBorderIcon
                                   style={{
-                                    fontSize: "3rem",
+                                    fontSize: "2.2rem",
                                     fontWeight: "bold",
                                   }}
                                 />
@@ -430,14 +441,14 @@ const AllEntries = (props) => {
                               {calli.wish ? (
                                 <BookmarksIcon
                                   style={{
-                                    fontSize: "3rem",
+                                    fontSize: "2.2rem",
                                     fontWeight: "bold",
                                   }}
                                 />
                               ) : (
                                 <BookmarkBorderIcon
                                   style={{
-                                    fontSize: "3rem",
+                                    fontSize: "2.2rem",
                                     fontWeight: "bold",
                                   }}
                                 />
@@ -475,6 +486,7 @@ const AllEntries = (props) => {
         </div>
       </div>
       <ImageModal image={image} open={open} setOpen={setOpen} />
+      <TopButton button={button}/>
     </>
   );
 };
