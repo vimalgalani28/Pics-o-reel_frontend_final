@@ -1,9 +1,15 @@
 import React from "react";
 // import { Modal, Button } from "react-bootstrap";
-import { Modal, Slide, makeStyles, Button, IconButton } from "@material-ui/core";
+import {
+  Modal,
+  Slide,
+  makeStyles,
+  Button,
+  IconButton,
+} from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import "./modal.css";
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles({
   root: {
@@ -44,22 +50,22 @@ const MyModal = ({ open, handleClose, logoutHandler }) => {
             </span>
             <span onClick={handleClose} style={{ margin: "5px auto" }}>
               <NavLink
-                to="/myEntries"
+                to="/entries"
                 exact={true}
                 activeClassName="active"
                 className="links"
               >
-                My Entries
+                Entries
               </NavLink>
             </span>
             <span onClick={handleClose} style={{ margin: "5px auto" }}>
               <NavLink
-                to="/create"
+                to="/wishlist"
                 exact={true}
                 activeClassName="active"
                 className="links"
               >
-                Submit Entry
+                Wishlist
               </NavLink>
             </span>
             <span

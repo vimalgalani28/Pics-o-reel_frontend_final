@@ -150,7 +150,7 @@ const Form = (props) => {
       body.append("section", formData.section);
       const options = {
         method: "POST",
-        url: "https://picsoreel-api-voting.herokuapp.com/entry/upload",
+        url: "http://localhost:5000upload",
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
