@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-// import Clock from "../Timer/Timer";
-import { IconButton, Collapse, Button } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { Link as Scroll } from "react-scroll";
-import { useHistory } from "react-router-dom";
+import Clock from "../Timer/Timer";
+import { Collapse } from "@material-ui/core";
+// import { IconButton, Collapse, Button } from "@material-ui/core";
+// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+// import { Link as Scroll } from "react-scroll";
+// import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   full: {
@@ -68,13 +69,14 @@ const useStyles = makeStyles((theme) => ({
 const Main = (props) => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
-  const history = useHistory();
-  const handleClick = () => history.push("/entries");
+  // const history = useHistory();
+  // const handleClick = () => history.push("/entries");
 
   useEffect(() => {
     setChecked(true);
   }, []);
-  // const date = new Date();
+  const date = "Wed May 20 2021 9:00:00 GMT+0530 (India Standard Time)";
+  console.log(date);
   return (
     <>
       <div className={classes.full}>
@@ -100,7 +102,7 @@ const Main = (props) => {
               </p>
             </h1>
 
-            <Scroll to="header" smooth={true}>
+            {/*  <Scroll to="header" smooth={true}>
               <IconButton>
                 <ExpandMoreIcon
                   style={{ fontSize: "70", color: "hsl(42, 78%, 60%)" }}
@@ -110,8 +112,11 @@ const Main = (props) => {
             <br></br>
             <Button variant="contained" color="primary" onClick={handleClick}>
               Entries
-            </Button>
+  </Button>*/}
           </div>
+          <br />
+          <br />
+          <Clock deadline={date} />
         </Collapse>
       </div>
     </>

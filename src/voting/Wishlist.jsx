@@ -14,9 +14,9 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Avatar from "@material-ui/core/Avatar";
-import moment from "moment";
+// import CardActions from "@material-ui/core/CardActions";
+// import Avatar from "@material-ui/core/Avatar";
+// import moment from "moment";
 import { connect } from "react-redux";
 import CheckBoxTwoToneIcon from "@material-ui/icons/CheckBoxTwoTone";
 import CheckBoxOutlineBlankTwoToneIcon from "@material-ui/icons/CheckBoxOutlineBlankTwoTone";
@@ -28,10 +28,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import IconButton from "@material-ui/core/IconButton";
+// import IconButton from "@material-ui/core/IconButton";
 import { useHistory } from "react-router-dom";
 import ImageModal from "./ImageModal/ImageModal";
-import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
+// import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -161,7 +161,7 @@ const AllEntries = (props) => {
       const token = JSON.parse(localStorage.getItem("picsjwt"));
       const options = {
         method: "POST",
-        url: "https://picsoreel-api-voting.herokuapp.com/vote",
+        url: "http://localhost:5000/vote",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -354,12 +354,6 @@ const AllEntries = (props) => {
                           <Grid item xs={12} sm={6} key={paint._id}>
                             <Card className={classesCard.root}>
                               <CardHeader
-                                avatar={
-                                  <Avatar
-                                    aria-label="recipe"
-                                    className={classesCard.avatar}
-                                  ></Avatar>
-                                }
                                 action={
                                   <Button
                                     color="primary"
@@ -380,11 +374,13 @@ const AllEntries = (props) => {
                                   </Button>
                                 }
                                 title={paint.title}
-                                subheader={moment(paint.createdAt).format(
-                                  "MMMM D, YYYY"
-                                )}
                               />
                               <CardMedia
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                  setOpenImage(true);
+                                  setImage(paint.imageBucketLink);
+                                }}
                                 className={classesCard.media}
                                 image={paint.imageThumbLink}
                               />
@@ -397,21 +393,6 @@ const AllEntries = (props) => {
                                   {paint.description}
                                 </Typography>
                               </CardContent>
-                              <CardActions disableSpacing>
-                                <IconButton
-                                  onClick={() => {
-                                    setOpenImage(true);
-                                    setImage(paint.imageBucketLink);
-                                  }}
-                                >
-                                  <VisibilityOutlinedIcon
-                                    style={{
-                                      fontSize: "2.4rem",
-                                      fontWeight: "bold",
-                                    }}
-                                  />
-                                </IconButton>
-                              </CardActions>
                             </Card>
                           </Grid>
                         );
@@ -514,12 +495,6 @@ const AllEntries = (props) => {
                           >
                             <Card className={classesCard.root}>
                               <CardHeader
-                                avatar={
-                                  <Avatar
-                                    aria-label="recipe"
-                                    className={classesCard.avatar}
-                                  ></Avatar>
-                                }
                                 action={
                                   <Button
                                     color="primary"
@@ -540,11 +515,13 @@ const AllEntries = (props) => {
                                   </Button>
                                 }
                                 title={photo.title}
-                                subheader={moment(photo.createdAt).format(
-                                  "MMMM D, YYYY"
-                                )}
                               />
                               <CardMedia
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                  setOpenImage(true);
+                                  setImage(photo.imageBucketLink);
+                                }}
                                 className={classesCard.media}
                                 image={photo.imageThumbLink}
                               />
@@ -557,21 +534,6 @@ const AllEntries = (props) => {
                                   {photo.description}
                                 </Typography>
                               </CardContent>
-                              <CardActions disableSpacing>
-                                <IconButton
-                                  onClick={() => {
-                                    setOpenImage(true);
-                                    setImage(photo.imageBucketLink);
-                                  }}
-                                >
-                                  <VisibilityOutlinedIcon
-                                    style={{
-                                      fontSize: "2.4rem",
-                                      fontWeight: "bold",
-                                    }}
-                                  />
-                                </IconButton>
-                              </CardActions>
                             </Card>
                           </Grid>
                         );
@@ -675,12 +637,6 @@ const AllEntries = (props) => {
                           >
                             <Card className={classesCard.root}>
                               <CardHeader
-                                avatar={
-                                  <Avatar
-                                    aria-label="recipe"
-                                    className={classesCard.avatar}
-                                  ></Avatar>
-                                }
                                 action={
                                   <Button
                                     color="primary"
@@ -701,11 +657,13 @@ const AllEntries = (props) => {
                                   </Button>
                                 }
                                 title={calli.title}
-                                subheader={moment(calli.createdAt).format(
-                                  "MMMM D, YYYY"
-                                )}
                               />
                               <CardMedia
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                  setOpenImage(true);
+                                  setImage(calli.imageBucketLink);
+                                }}
                                 className={classesCard.media}
                                 image={calli.imageThumbLink}
                               />
@@ -718,21 +676,6 @@ const AllEntries = (props) => {
                                   {calli.description}
                                 </Typography>
                               </CardContent>
-                              <CardActions disableSpacing>
-                                <IconButton
-                                  onClick={() => {
-                                    setOpenImage(true);
-                                    setImage(calli.imageBucketLink);
-                                  }}
-                                >
-                                  <VisibilityOutlinedIcon
-                                    style={{
-                                      fontSize: "2.4rem",
-                                      fontWeight: "bold",
-                                    }}
-                                  />
-                                </IconButton>
-                              </CardActions>
                             </Card>
                           </Grid>
                         );

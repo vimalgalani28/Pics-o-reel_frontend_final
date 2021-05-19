@@ -74,7 +74,7 @@ const LoginPage = (props) => {
     }
     const options = {
       method: "POST",
-      url: "https://picsoreel-api-voting.herokuapp.com/user/login",
+      url: "http://localhost:5000/user/login",
       data: {
         idToken: data.idToken.rawIdToken,
       },
@@ -89,7 +89,7 @@ const LoginPage = (props) => {
         // setLoginError("");
         const allEntriesAPI = {
           method: "GET",
-          url: "https://picsoreel-api-voting.herokuapp.com/entries/allentries",
+          url: "http://localhost:5000/entries/allentries",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,

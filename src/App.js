@@ -12,7 +12,7 @@ const App = (props) => {
     const fetchUser = async (token) => {
       const options = {
         method: "GET",
-        url: "https://picsoreel-api-voting.herokuapp.com/user",
+        url: "http://localhost:5000/user",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -25,7 +25,7 @@ const App = (props) => {
           props.dispatch(loginUser(user));
           const allEntriesAPI = {
             method: "GET",
-            url: "https://picsoreel-api-voting.herokuapp.com/entries/allentries",
+            url: "http://localhost:5000/entries/allentries",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,

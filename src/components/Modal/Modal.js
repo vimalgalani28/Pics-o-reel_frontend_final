@@ -48,7 +48,7 @@ const MyModal = ({ open, handleClose, logoutHandler }) => {
                 Home
               </NavLink>
             </span>
-            <span onClick={handleClose} style={{ margin: "5px auto" }}>
+            {/* <span onClick={handleClose} style={{ margin: "5px auto" }}>
               <NavLink
                 to="/entries"
                 exact={true}
@@ -67,7 +67,7 @@ const MyModal = ({ open, handleClose, logoutHandler }) => {
               >
                 Wishlist
               </NavLink>
-            </span>
+  </span>*/}
             <span
               onClick={handleClose}
               style={{ margin: "5px auto", marginBottom: "20px" }}

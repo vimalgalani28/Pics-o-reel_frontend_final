@@ -1,5 +1,5 @@
 import React from "react";
-// import "./timer.css";
+import "./timer.css";
 const zerofill = (num) => (num < 10 && num >= 0 ? `0${num}` : num);
 
 const SvgCircle = (props) => {
@@ -48,7 +48,7 @@ SvgCircle.defaultProps = {
   done: 0,
   max: 24,
   radius: 72,
-  stroke: "#e91e63",
+  stroke: "#fd6a02",
   strokeWidth: 8,
 };
 
@@ -62,6 +62,7 @@ class Clock extends React.Component {
       seconds: 0,
     };
   }
+
   componentWillMount() {
     this.getTimeUntil(this.props.deadline);
   }
@@ -86,17 +87,6 @@ class Clock extends React.Component {
   render() {
     return (
       <div className="clock">
-        <div className="clock__display">
-          <SvgCircle
-            className="clock__circle"
-            max={365}
-            done={this.state.days}
-          />
-          <div className="clock__text clock__text--days">
-            <span className="clock__amount">{zerofill(this.state.days)}</span>
-            <span className="clock__unit">days</span>
-          </div>
-        </div>
         <div className="clock__display">
           <SvgCircle max={24} done={this.state.hours} />
           <div className="clock__text clock__text--hours">

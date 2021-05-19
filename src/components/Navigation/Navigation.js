@@ -15,7 +15,7 @@ function Navigation(props) {
     const token = JSON.parse(localStorage.getItem("picsjwt"));
     const options = {
       method: "POST",
-      url: "https://picsoreel-api-voting.herokuapp.com/user/logout",
+      url: "http://localhost:5000/user/logout",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -51,24 +51,22 @@ function Navigation(props) {
             exact={true}
             activeClassName="active"
             className="links"
+          ></NavLink>
+          {/* <NavLink
+            to="/myEntries"
+            exact={true}
+            activeClassName="active"
+            className="links"
+          >
+            My Entries
+         </NavLink>*/}
+          <NavLink
+            to="/dashboard"
+            exact={true}
+            activeClassName="active"
+            className="links"
           >
             Home
-          </NavLink>
-          <NavLink
-            to="/entries"
-            exact={true}
-            activeClassName="active"
-            className="links"
-          >
-            Entries
-          </NavLink>
-          <NavLink
-            to="/wishlist"
-            exact={true}
-            activeClassName="active"
-            className="links"
-          >
-            Wishlist
           </NavLink>
 
           <Button variant="contained" onClick={logoutHandler}>
