@@ -75,10 +75,10 @@ const useStyles = makeStyles((theme) => ({
 const Form = (props) => {
   const history = useHistory();
   let contact = "";
-  if (props.myEntries.length !== 0) {
-    const lastEntry = props.myEntries[props.myEntries.length - 1];
-    contact = lastEntry.ownerPhone;
-  }
+  // if (props.myEntries.length !== 0) {
+  //   const lastEntry = props.myEntries[props.myEntries.length - 1];
+  //   contact = lastEntry.ownerPhone;
+  // }
   const classes = useStyles();
   initialState.contact = contact;
   const [formData, setFormData] = useState(initialState);
@@ -150,7 +150,7 @@ const Form = (props) => {
       body.append("section", formData.section);
       const options = {
         method: "POST",
-        url: "http://localhost:5000upload",
+        url: "https://picsoreel-api-voting.herokuapp.com/upload",
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

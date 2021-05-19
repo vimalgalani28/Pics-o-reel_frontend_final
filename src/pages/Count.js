@@ -67,7 +67,7 @@ const LoginPage = (props) => {
 
       const newOptions = {
         method: "GET",
-        url: "https://pics-api.pictoreal.in/voting.herokuapp.com/entries/count",
+        url: "https://picsoreel-api-voting.herokuapp.com/voting.herokuapp.com/entries/count",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

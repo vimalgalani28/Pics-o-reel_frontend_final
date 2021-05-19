@@ -13,16 +13,16 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Avatar from "@material-ui/core/Avatar";
-import moment from "moment";
+// import CardActions from "@material-ui/core/CardActions";
+// import Avatar from "@material-ui/core/Avatar";
+// import moment from "moment";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import IconButton from "@material-ui/core/IconButton";
 import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import { connect } from "react-redux";
 import { addInWishlist, removeExpense } from "../actions/wishlist";
 import ImageModal from "./ImageModal/ImageModal";
-import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
+// import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -130,16 +130,13 @@ const AllEntries = (props) => {
   const [image, setImage] = useState("");
 
   const handleAddWishlist = (entry) => {
-    console.log(entry.wish);
     if (!entry.wish) {
       props.dispatch(addInWishlist(entry));
     } else {
       props.dispatch(removeExpense(entry._id));
-      console.log("removed!", entry._id);
     }
     entry.wish = !entry.wish;
   };
-  console.log(props.allEntries);
 
   const paintings = props.allEntries.filter(
     (entry) => entry.section === "Painting"
@@ -213,12 +210,6 @@ const AllEntries = (props) => {
                     <Grid item xs={12} sm={6} key={paint._id}>
                       <Card className={classesCard.root}>
                         <CardHeader
-                          avatar={
-                            <Avatar
-                              aria-label="recipe"
-                              className={classesCard.avatar}
-                            ></Avatar>
-                          }
                           action={
                             <Button
                               color="primary"
@@ -228,18 +219,31 @@ const AllEntries = (props) => {
                               {props.myWishEntries.some(
                                 (entry) => entry._id === paint._id
                               ) ? (
-                                <BookmarksIcon />
+                                <BookmarksIcon
+                                  style={{
+                                    fontSize: "3rem",
+                                    fontWeight: "bold",
+                                  }}
+                                />
                               ) : (
-                                <BookmarkBorderIcon />
+                                <BookmarkBorderIcon
+                                  style={{
+                                    fontSize: "3rem",
+                                    fontWeight: "bold",
+                                  }}
+                                />
                               )}
                             </Button>
                           }
                           title={paint.title}
-                          subheader={moment(paint.createdAt).format(
-                            "MMMM D, YYYY"
-                          )}
                         />
+
                         <CardMedia
+                          onClick={() => {
+                            setOpen(true);
+                            setImage(paint.imageBucketLink);
+                          }}
+                          style={{ cursor: "pointer" }}
                           className={classesCard.media}
                           image={paint.imageThumbLink}
                         />
@@ -252,18 +256,6 @@ const AllEntries = (props) => {
                             {paint.description}
                           </Typography>
                         </CardContent>
-                        <CardActions disableSpacing>
-                          <IconButton
-                            onClick={() => {
-                              setOpen(true);
-                              setImage(paint.imageBucketLink);
-                            }}
-                          >
-                            <VisibilityOutlinedIcon
-                              style={{ fontSize: "2.4rem", fontWeight: "bold" }}
-                            />
-                          </IconButton>
-                        </CardActions>
                       </Card>
                     </Grid>
                   );
@@ -298,12 +290,6 @@ const AllEntries = (props) => {
                     >
                       <Card className={classesCard.root}>
                         <CardHeader
-                          avatar={
-                            <Avatar
-                              aria-label="recipe"
-                              className={classesCard.avatar}
-                            ></Avatar>
-                          }
                           action={
                             <IconButton
                               color="primary"
@@ -311,18 +297,30 @@ const AllEntries = (props) => {
                               onClick={(e) => handleAddWishlist(photo, e)}
                             >
                               {photo.wish ? (
-                                <BookmarksIcon />
+                                <BookmarksIcon
+                                  style={{
+                                    fontSize: "3rem",
+                                    fontWeight: "bold",
+                                  }}
+                                />
                               ) : (
-                                <BookmarkBorderIcon />
+                                <BookmarkBorderIcon
+                                  style={{
+                                    fontSize: "3rem",
+                                    fontWeight: "bold",
+                                  }}
+                                />
                               )}
                             </IconButton>
                           }
                           title={photo.title}
-                          subheader={moment(photo.createdAt).format(
-                            "MMMM D, YYYY"
-                          )}
                         />
                         <CardMedia
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            setOpen(true);
+                            setImage(photo.imageBucketLink);
+                          }}
                           className={classesCard.media}
                           image={photo.imageThumbLink}
                         />
@@ -335,18 +333,6 @@ const AllEntries = (props) => {
                             {photo.description}
                           </Typography>
                         </CardContent>
-                        <CardActions disableSpacing>
-                          <IconButton
-                            onClick={() => {
-                              setOpen(true);
-                              setImage(photo.imageBucketLink);
-                            }}
-                          >
-                            <VisibilityOutlinedIcon
-                              style={{ fontSize: "2.4rem", fontWeight: "bold" }}
-                            />
-                          </IconButton>
-                        </CardActions>
                       </Card>
                     </Grid>
                   );
@@ -380,34 +366,16 @@ const AllEntries = (props) => {
                       className={classes.grid}
                     >
                       <Card className={classesCard.root}>
-                        <CardHeader
-                          avatar={
-                            <Avatar
-                              aria-label="recipe"
-                              className={classesCard.avatar}
-                            ></Avatar>
-                          }
-                          // action={
-                          //   <IconButton
-                          //     color="primary"
-                          //     aria-label="add to wishlist"
-                          //     // onClick={(calli) => handleWish}
-                          //   >
-                          //     {calli.wish ? (
-                          //       <BookmarksIcon />
-                          //     ) : (
-                          //       <BookmarkBorderIcon />
-                          //     )}
-                          //   </IconButton>
-                          // }
-                          title={calli.title}
-                          subheader={moment(calli.createdAt).format(
-                            "MMMM D, YYYY"
-                          )}
-                        />
+                        <CardHeader title={calli.title} />
+
                         <CardMedia
+                          style={{ cursor: "pointer" }}
                           className={classesCard.media}
                           image={calli.imageThumbLink}
+                          onClick={() => {
+                            setOpen(true);
+                            setImage(calli.imageBucketLink);
+                          }}
                         />
                         <CardContent>
                           <Typography
@@ -418,18 +386,6 @@ const AllEntries = (props) => {
                             {calli.description}
                           </Typography>
                         </CardContent>
-                        <CardActions disableSpacing>
-                          <IconButton
-                            onClick={() => {
-                              setOpen(true);
-                              setImage(calli.imageBucketLink);
-                            }}
-                          >
-                            <VisibilityOutlinedIcon
-                              style={{ fontSize: "2.4rem", fontWeight: "bold" }}
-                            />
-                          </IconButton>
-                        </CardActions>
                       </Card>
                     </Grid>
                   );
@@ -465,12 +421,6 @@ const AllEntries = (props) => {
                     >
                       <Card className={classesCard.root}>
                         <CardHeader
-                          avatar={
-                            <Avatar
-                              aria-label="recipe"
-                              className={classesCard.avatar}
-                            ></Avatar>
-                          }
                           action={
                             <IconButton
                               color="primary"
@@ -478,20 +428,33 @@ const AllEntries = (props) => {
                               onClick={(e) => handleAddWishlist(calli, e)}
                             >
                               {calli.wish ? (
-                                <BookmarksIcon />
+                                <BookmarksIcon
+                                  style={{
+                                    fontSize: "3rem",
+                                    fontWeight: "bold",
+                                  }}
+                                />
                               ) : (
-                                <BookmarkBorderIcon />
+                                <BookmarkBorderIcon
+                                  style={{
+                                    fontSize: "3rem",
+                                    fontWeight: "bold",
+                                  }}
+                                />
                               )}
                             </IconButton>
                           }
                           title={calli.title}
-                          subheader={moment(calli.createdAt).format(
-                            "MMMM D, YYYY"
-                          )}
                         />
+
                         <CardMedia
+                          style={{ cursor: "pointer" }}
                           className={classesCard.media}
                           image={calli.imageThumbLink}
+                          onClick={() => {
+                            setOpen(true);
+                            setImage(calli.imageBucketLink);
+                          }}
                         />
                         <CardContent>
                           <Typography
@@ -502,18 +465,6 @@ const AllEntries = (props) => {
                             {calli.description}
                           </Typography>
                         </CardContent>
-                        <CardActions disableSpacing>
-                          <IconButton
-                            onClick={() => {
-                              setOpen(true);
-                              setImage(calli.imageBucketLink);
-                            }}
-                          >
-                            <VisibilityOutlinedIcon
-                              style={{ fontSize: "2.4rem", fontWeight: "bold" }}
-                            />
-                          </IconButton>
-                        </CardActions>
                       </Card>
                     </Grid>
                   );

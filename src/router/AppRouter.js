@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Route, Switch } from "react-router-dom";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 import NotFoundPage from "../pages/NotFoundPage";
 import LoginPage from "../pages/LoginPage";
 import DashboardPage from "../pages/DashboardPage";
@@ -10,11 +10,12 @@ import PublicRoute from "./PublicRoute";
 import AllEntries from "../voting/AllEntries";
 import Wishlist from "../voting/Wishlist";
 import AdminPage from "../pages/AdminPage";
+
 export const history = createBrowserHistory();
 
 const AppRouter = (props) => {
   return (
-    <Router history={history}>
+    <BrowserRouter>
       <div>
         <Switch>
           <PublicRoute
@@ -42,20 +43,10 @@ const AppRouter = (props) => {
             exact={true}
             component={AdminPage}
           ></PrivateRoute>
-          <PrivateRoute
-            path="/admin/allEntries"
-            exact={true}
-            component={AllEntries}
-          ></PrivateRoute>
-          <PrivateRoute
-            path="/admin/wishlist"
-            exact={true}
-            component={Wishlist}
-          ></PrivateRoute>
           <Route component={NotFoundPage}></Route>
         </Switch>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 };
 

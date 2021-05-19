@@ -33,6 +33,10 @@
   --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   --max-width: 1170px;
+  --color-bg: #cddc39;
+  --color-primary: hsl(209, 23%, 60%);
+  --color-text: rgba(hsl(42, 78%, 60%), 0.65);
+  --bg-image: linear-gradient(135deg, #009688, rgba(white, 0.2));
 }
 
 h1,

@@ -69,7 +69,7 @@ const Main = (props) => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
   const history = useHistory();
-  const handleClick = () => history.push("/create");
+  const handleClick = () => history.push("/entries");
 
   useEffect(() => {
     setChecked(true);
