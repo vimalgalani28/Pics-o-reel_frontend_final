@@ -305,7 +305,7 @@ const AllEntries = (props) => {
 
   return (
     <>
-      <div>
+      <div id="top">
         <div className="entries">
           <CustomizedSnackbar
             open={open}
