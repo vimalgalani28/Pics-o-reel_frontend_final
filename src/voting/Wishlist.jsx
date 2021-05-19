@@ -31,6 +31,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 // import IconButton from "@material-ui/core/IconButton";
 import { useHistory } from "react-router-dom";
 import ImageModal from "./ImageModal/ImageModal";
+import TopButton from "../components/TopButton/TopButton";
 // import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 
 function TabPanel(props) {
@@ -292,6 +293,16 @@ const AllEntries = (props) => {
   const history = useHistory();
   const handleClick = () => history.push("/entries");
 
+  window.onscroll = function() {scrollFunction()};
+  const [button, setButton] = useState(false)
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      setButton(true)
+    } else {
+      setButton(false)
+    }
+  }
+
   return (
     <>
       <div>
@@ -426,7 +437,7 @@ const AllEntries = (props) => {
                             {"Are you sure?"}
                           </DialogTitle>
                           <DialogContent>
-                            <DialogContentText id="alert-dialog-description"></DialogContentText>
+                            <DialogContentText id="alert-dialog-description">You can vote only once for each category!</DialogContentText>
                           </DialogContent>
                           <DialogActions>
                             <Button onClick={handleClose} color="primary">
@@ -567,7 +578,7 @@ const AllEntries = (props) => {
                             {"Are you sure?"}
                           </DialogTitle>
                           <DialogContent>
-                            <DialogContentText id="alert-dialog-description"></DialogContentText>
+                            <DialogContentText id="alert-dialog-description">You can vote only once for each category!</DialogContentText>
                           </DialogContent>
                           <DialogActions>
                             <Button onClick={handleClose} color="primary">
@@ -711,7 +722,7 @@ const AllEntries = (props) => {
                             {"Are you sure?"}
                           </DialogTitle>
                           <DialogContent>
-                            <DialogContentText id="alert-dialog-description"></DialogContentText>
+                            <DialogContentText id="alert-dialog-description">You can vote only once for each category!</DialogContentText>
                           </DialogContent>
                           <DialogActions>
                             <Button onClick={handleClose} color="primary">
@@ -766,6 +777,7 @@ const AllEntries = (props) => {
       </div>
 
       <ImageModal image={image} open={openImage} setOpen={setOpenImage} />
+      <TopButton button={button}/>
     </>
   );
 };
