@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MyModal from "../Modal/Modal";
 import { Button, IconButton } from "@material-ui/core";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/user";
@@ -46,7 +46,7 @@ function Navigation(props) {
           </Link>
         </div>
         <div className="link-container">
-          <NavLink
+          {/* <NavLink
             to="/dashboard"
             exact={true}
             activeClassName="active"
@@ -76,6 +76,14 @@ function Navigation(props) {
           >
             Wishlist
           </NavLink>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSec2RvLzYqeWZ-gkKzfXciO7Z9aXyLFNTqWV0npTTQXD71gDQ/viewform"
+            target="_blank"
+            rel="noreferrer"
+            className="links"
+          >
+            Feedback
+          </a> */}
 
           <Button variant="contained" onClick={logoutHandler}>
             Logout

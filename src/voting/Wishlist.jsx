@@ -268,7 +268,7 @@ const AllEntries = (props) => {
           setVoteError("");
           setDialogbox(true);
         } else {
-          setVoteError("You Can Select Maximum 1 Entries!");
+          setVoteError("You Can Select Maximum 1 Entry!");
         }
       } else {
         console.log(section);
@@ -443,7 +443,7 @@ const AllEntries = (props) => {
                           </DialogTitle>
                           <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                              You can vote only once for each category!
+                              You can only vote once for each category!
                             </DialogContentText>
                           </DialogContent>
                           <DialogActions>
@@ -469,7 +469,7 @@ const AllEntries = (props) => {
                     <h1 className={classes.title}>
                       <br></br>
                       <span className={classes.colorText}>
-                        You can vote only once!
+                      You can only vote once for each category!
                       </span>
                     </h1>
                   </div>
@@ -586,7 +586,7 @@ const AllEntries = (props) => {
                           </DialogTitle>
                           <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                              You can vote only once for each category!
+                            You can only vote once for each category!
                             </DialogContentText>
                           </DialogContent>
                           <DialogActions>
@@ -612,7 +612,7 @@ const AllEntries = (props) => {
                     <h1 className={classes.title}>
                       <br></br>
                       <span className={classes.colorText}>
-                        You can vote only once!
+                      You can only vote once for each category!
                       </span>
                     </h1>
                   </div>
@@ -732,7 +732,7 @@ const AllEntries = (props) => {
                           </DialogTitle>
                           <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                              You can vote only once for each category!
+                            You can only vote once for each category!
                             </DialogContentText>
                           </DialogContent>
                           <DialogActions>
@@ -758,7 +758,7 @@ const AllEntries = (props) => {
                     <h1 className={classes.title}>
                       <br></br>
                       <span className={classes.colorText}>
-                        You can vote only once!
+                      You can only vote once for each category!
                       </span>
                     </h1>
                   </div>

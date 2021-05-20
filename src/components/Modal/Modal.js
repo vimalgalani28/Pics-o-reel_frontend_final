@@ -7,7 +7,7 @@ import {
   Button,
   IconButton,
 } from "@material-ui/core";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import "./modal.css";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -38,7 +38,7 @@ const MyModal = ({ open, handleClose, logoutHandler }) => {
             </IconButton>
           </div>
           <div className="links-mobile-container">
-            <span onClick={handleClose} style={{ margin: "5px auto" }}>
+            {/* <span onClick={handleClose} style={{ margin: "5px auto" }}>
               <NavLink
                 to="/dashboard"
                 exact={true}
@@ -68,6 +68,16 @@ const MyModal = ({ open, handleClose, logoutHandler }) => {
                 Wishlist
               </NavLink>
             </span>
+            <span onClick={handleClose} style={{ margin: "5px auto" }}>
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSec2RvLzYqeWZ-gkKzfXciO7Z9aXyLFNTqWV0npTTQXD71gDQ/viewform"
+                target="_blank"
+                rel="noreferrer"
+                className="links"
+              >
+                Feedback
+              </a>
+            </span> */}
             <span
               onClick={handleClose}
               style={{ margin: "5px auto", marginBottom: "20px" }}
