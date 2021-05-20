@@ -165,7 +165,7 @@ const AdminPage = (props) => {
 
       const newOptions = {
         method: "GET",
-        url: "https://picsoreel-api-voting.herokuapp.com/entries/leaderboard",
+        url: "https://pics-api.pictoreal.in/entries/leaderboard",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

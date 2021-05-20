@@ -162,7 +162,7 @@ const AllEntries = (props) => {
       const token = JSON.parse(localStorage.getItem("picsjwt"));
       const options = {
         method: "POST",
-        url: "https://picsoreel-api-voting.herokuapp.com/vote",
+        url: "https://pics-api.pictoreal.in/vote",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -293,13 +293,18 @@ const AllEntries = (props) => {
   const history = useHistory();
   const handleClick = () => history.push("/entries");
 
-  window.onscroll = function() {scrollFunction()};
-  const [button, setButton] = useState(false)
+  window.onscroll = function () {
+    scrollFunction();
+  };
+  const [button, setButton] = useState(false);
   function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-      setButton(true)
+    if (
+      document.body.scrollTop > 20 ||
+      document.documentElement.scrollTop > 20
+    ) {
+      setButton(true);
     } else {
-      setButton(false)
+      setButton(false);
     }
   }
 
@@ -437,7 +442,9 @@ const AllEntries = (props) => {
                             {"Are you sure?"}
                           </DialogTitle>
                           <DialogContent>
-                            <DialogContentText id="alert-dialog-description">You can vote only once for each category!</DialogContentText>
+                            <DialogContentText id="alert-dialog-description">
+                              You can vote only once for each category!
+                            </DialogContentText>
                           </DialogContent>
                           <DialogActions>
                             <Button onClick={handleClose} color="primary">
@@ -578,7 +585,9 @@ const AllEntries = (props) => {
                             {"Are you sure?"}
                           </DialogTitle>
                           <DialogContent>
-                            <DialogContentText id="alert-dialog-description">You can vote only once for each category!</DialogContentText>
+                            <DialogContentText id="alert-dialog-description">
+                              You can vote only once for each category!
+                            </DialogContentText>
                           </DialogContent>
                           <DialogActions>
                             <Button onClick={handleClose} color="primary">
@@ -722,7 +731,9 @@ const AllEntries = (props) => {
                             {"Are you sure?"}
                           </DialogTitle>
                           <DialogContent>
-                            <DialogContentText id="alert-dialog-description">You can vote only once for each category!</DialogContentText>
+                            <DialogContentText id="alert-dialog-description">
+                              You can vote only once for each category!
+                            </DialogContentText>
                           </DialogContent>
                           <DialogActions>
                             <Button onClick={handleClose} color="primary">
@@ -777,7 +788,7 @@ const AllEntries = (props) => {
       </div>
 
       <ImageModal image={image} open={openImage} setOpen={setOpenImage} />
-      <TopButton button={button}/>
+      <TopButton button={button} />
     </>
   );
 };
