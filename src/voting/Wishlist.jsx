@@ -162,7 +162,7 @@ const AllEntries = (props) => {
       const token = JSON.parse(localStorage.getItem("picsjwt"));
       const options = {
         method: "POST",
-        url: "https://pics-api.pictoreal.in/vote",
+        url: "http://pics-o-reel-api.herokuapp.com/vote",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

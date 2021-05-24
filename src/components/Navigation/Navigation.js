@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MyModal from "../Modal/Modal";
 import { Button, IconButton } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/user";
@@ -15,7 +15,7 @@ function Navigation(props) {
     const token = JSON.parse(localStorage.getItem("picsjwt"));
     const options = {
       method: "POST",
-      url: "https://pics-api.pictoreal.in/user/logout",
+      url: "http://pics-o-reel-api.herokuapp.com/user/logout",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ function Navigation(props) {
           </Link>
         </div>
         <div className="link-container">
-          {/* <NavLink
+          <NavLink
             to="/dashboard"
             exact={true}
             activeClassName="active"
@@ -83,7 +83,7 @@ function Navigation(props) {
             className="links"
           >
             Feedback
-          </a> */}
+          </a>
 
           <Button variant="contained" onClick={logoutHandler}>
             Logout

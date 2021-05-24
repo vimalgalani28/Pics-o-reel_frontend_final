@@ -1,11 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-// import { Button } from "@material-ui/core";
-// import { useHistory } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const NotFoundPage = () => {
-  // const history = useHistory();
-  // const handleClick = () => history.push("/");
+  const history = useHistory();
+  const handleClick = () => history.push("/");
   const useStyles = makeStyles((theme) => ({
     appBar: {
       margin: "0 auto",
@@ -51,15 +51,15 @@ const NotFoundPage = () => {
     <div className={classes.containerText}>
       <h1 className={classes.title}>
         <br></br>
-        <span className={classes.colorText}>Only Admins Can Use This</span>
+        <span className={classes.colorText}>404 Not found</span>
       </h1>
-      {/* <Button
+      <Button
         variant="contained"
         color="hsl(42, 78%, 60%)"
         onClick={handleClick}
       >
         Home
-      </Button> */}
+      </Button>
     </div>
   );
 };
