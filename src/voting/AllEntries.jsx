@@ -146,11 +146,11 @@ const AllEntries = (props) => {
     (entry) => entry.section === "Photography"
   );
   const calligraphies = props.allEntries.filter(
-    (entry) => entry.section === "Calligraphy"
+    (entry) => entry.section === "Others"
   );
-  const independenceDayEntries = props.allEntries.filter(
-    (entry) => entry.section === "Independence"
-  );
+  // const independenceDayEntries = props.allEntries.filter(
+  //   (entry) => entry.section === "Independence"
+  // );
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -191,7 +191,7 @@ const AllEntries = (props) => {
               <Tab label="Painting/Sketches" {...a11yProps(0)} />
               <Tab label="Photography" {...a11yProps(1)} />
               <Tab label="Others" {...a11yProps(2)} />
-              <Tab label="Independence Day Special" {...a11yProps(3)} />
+              {/* <Tab label="Independence Day Special" {...a11yProps(3)} /> */}
             </Tabs>
           </AppBar>
           <SwipeableViews
@@ -404,7 +404,7 @@ const AllEntries = (props) => {
               </Grid>
             </TabPanel>
 
-            <TabPanel
+            {/* <TabPanel
               value={value}
               index={3}
               dir={theme.direction}
@@ -481,7 +481,7 @@ const AllEntries = (props) => {
                   );
                 })}
               </Grid>
-            </TabPanel>
+            </TabPanel> */}
           </SwipeableViews>
         </div>
       </div>

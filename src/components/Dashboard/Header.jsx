@@ -44,17 +44,17 @@ const Header = () => {
                 accord 3 votes per section.
               </li>
               <br />
-              <li>
+              {/* <li>
                 <b> For Independence Day Category:</b> You can accord only 1
                 vote.
-              </li>
+              </li> */}
             </p>
             <span className="number">3</span>
           </article>
           <article className="timeline-item" style={{ textAlign: "right" }}>
             <h3>Deadline</h3>
             <p>
-              Voting closes today at <b>6 pm.</b>
+              Voting closes today at <b>9 pm.</b>
             </p>
             <span className="number">4</span>
           </article>

@@ -37,10 +37,7 @@ const LeaderBoardTable = ({ sectionEntries, searchText, paintingCheck, photograp
         if (!photographyCheck) {
             bool = bool && (section !== 'Photography')
         }
-        if (!independenceCheck) {
-            bool = bool && (section !== "Independence")
-        }
-        return ownerName.toLowerCase().includes(searchText.toLowerCase()) && bool && (section !== 'Calligraphy')
+        return ownerName.toLowerCase().includes(searchText.toLowerCase()) && bool && (section !== 'Others')
     })
     const compare = (a, b) => {
         if (a.voteCount < b.voteCount) {

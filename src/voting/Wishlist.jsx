@@ -144,9 +144,9 @@ const AllEntries = (props) => {
   const [openVotePhoto, setOpenVotePhoto] = useState(
     props.user.hasVotedPhotography
   );
-  const [openVoteIndependence, setopenVoteIndependence] = useState(
-    props.user.hasVotedIndependence
-  );
+  // const [openVoteIndependence, setopenVoteIndependence] = useState(
+  //   props.user.hasVotedIndependence
+  // );
   const [voteError, setVoteError] = useState("");
 
   const giveVote = async (section) => {
@@ -180,11 +180,11 @@ const AllEntries = (props) => {
             setVoteError(res.data.error);
           }
           switch (section) {
-            case "independence":
-              console.log("trued!");
-              props.user.hasVotedIndependence = true;
-              setopenVoteIndependence(true);
-              break;
+            // case "independence":
+            //   console.log("trued!");
+            //   props.user.hasVotedIndependence = true;
+            //   setopenVoteIndependence(true);
+            //   break;
             case "painting":
               props.user.hasVotedPainting = true;
               setOpenVotePaint(true);
@@ -213,7 +213,7 @@ const AllEntries = (props) => {
   };
 
   const handleAddVoteList = (entry) => {
-    console.log(entry);
+    // console.log(entry);
 
     if (!entry.vote) {
       props.dispatch(addInVote(entry));
@@ -221,7 +221,7 @@ const AllEntries = (props) => {
       props.dispatch(deleteInVote(entry._id));
     }
     entry.vote = !entry.vote;
-    console.log(props.voteEntries);
+    // console.log(props.voteEntries);
   };
 
   const paintings = props.myWishEntries.filter(
@@ -230,9 +230,9 @@ const AllEntries = (props) => {
   const photographies = props.myWishEntries.filter(
     (entry) => entry.section === "Photography"
   );
-  const independenceDayEntries = props.myWishEntries.filter(
-    (entry) => entry.section === "Independence"
-  );
+  // const independenceDayEntries = props.myWishEntries.filter(
+  //   (entry) => entry.section === "Independence"
+  // );
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -329,7 +329,7 @@ const AllEntries = (props) => {
             >
               <Tab label="Painting/Sketches" {...a11yProps(0)} />
               <Tab label="Photography" {...a11yProps(1)} />
-              <Tab label="Independence Day Special" {...a11yProps(2)} />
+              {/* <Tab label="Independence Day Special" {...a11yProps(2)} /> */}
             </Tabs>
           </AppBar>
           {!formLoader ? (
@@ -619,7 +619,7 @@ const AllEntries = (props) => {
                 )}
               </TabPanel>
 
-              <TabPanel
+              {/* <TabPanel
                 value={value}
                 index={2}
                 dir={theme.direction}
@@ -763,7 +763,7 @@ const AllEntries = (props) => {
                     </h1>
                   </div>
                 )}
-              </TabPanel>
+              </TabPanel> */}
             </SwipeableViews>
           ) : (
             <div

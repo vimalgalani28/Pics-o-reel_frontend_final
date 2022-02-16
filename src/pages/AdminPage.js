@@ -141,11 +141,9 @@ const AdminPage = (props) => {
   const [searchText, setSearchText] = useState("");
   const [paintingCheck, setPaintingCheck] = useState(true);
   const [photographyCheck, setPhotographyCheck] = useState(true);
-  const [independenceCheck, setIndependenceCheck] = useState(true);
   const [paintingCount, setPaintingCount] = useState(0);
   const [photographyCount, setPhotographyCount] = useState(0);
   const [othersCount, setOthersCount] = useState(0);
-  const [independenceCount, setIndependenceCount] = useState(0);
   const handleSearchText = (e) => {
     setSearchText(e.target.value);
   };
@@ -154,9 +152,6 @@ const AdminPage = (props) => {
   };
   const handlePhotographyCheck = (e) => {
     setPhotographyCheck(e.target.checked);
-  };
-  const handleIndependenceCheck = (e) => {
-    setIndependenceCheck(e.target.checked);
   };
   const { setLeaderBoardEntries, deleteLeaderBoardEntries } = props;
   useEffect(() => {
@@ -180,7 +175,6 @@ const AdminPage = (props) => {
           setPaintingCount(res.data.paintingCount);
           setPhotographyCount(res.data.photographyCount);
           setOthersCount(res.data.othersCount);
-          setIndependenceCount(res.data.independenceCount);
         }
       } catch (e) {
         console.log(e);
@@ -219,11 +213,11 @@ const AdminPage = (props) => {
               Others: {othersCount}
             </Typography>
           </Grid>
-          <Grid item xs={6} md={3}>
+          {/* <Grid item xs={6} md={3}>
             <Typography variant="h5" className={classes.counts}>
               Independence: {independenceCount}
             </Typography>
-          </Grid>
+          </Grid> */}
         </Grid>
         <AppBar position="static">
           <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
@@ -269,19 +263,6 @@ const AdminPage = (props) => {
                   />
                 }
                 label="Photography"
-              />
-            </div>
-            <div className={classes.change}>
-              <FormControlLabel
-                control={
-                  <GreenCheckbox
-                    checked={independenceCheck}
-                    onChange={handleIndependenceCheck}
-                    name="check"
-                    color="primary"
-                  />
-                }
-                label="Independence"
               />
             </div>
             <div className={classes.arrow}>
@@ -345,19 +326,6 @@ const AdminPage = (props) => {
                   label="Photography"
                 />
               </div>
-              <div>
-                <FormControlLabel
-                  control={
-                    <GreenCheckbox
-                      checked={independenceCheck}
-                      onChange={handleIndependenceCheck}
-                      name="checke"
-                      color="primary"
-                    />
-                  }
-                  label="Independence"
-                />
-              </div>
             </Toolbar>
           </Collapse>
         </AppBar>
@@ -366,7 +334,6 @@ const AdminPage = (props) => {
           searchText={searchText}
           paintingCheck={paintingCheck}
           photographyCheck={photographyCheck}
-          independenceCheck={independenceCheck}
         />
       </div>
     </div>
