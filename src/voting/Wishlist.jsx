@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
     width: "300px",
     [theme.breakpoints.up("sm")]: {
-      width: "570px",
+      width: "400px",
     },
   },
   container: {

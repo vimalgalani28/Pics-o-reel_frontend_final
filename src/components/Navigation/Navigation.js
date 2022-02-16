@@ -77,7 +77,7 @@ function Navigation(props) {
             Vote List
           </NavLink>
           <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSec2RvLzYqeWZ-gkKzfXciO7Z9aXyLFNTqWV0npTTQXD71gDQ/viewform"
+            href="https://forms.gle/A5ejMzhHNBmis33DA"
             target="_blank"
             rel="noreferrer"
             className="links"
