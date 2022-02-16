@@ -74,7 +74,7 @@ function Navigation(props) {
             activeClassName="active"
             className="links"
           >
-            Wishlist
+            Vote List
           </NavLink>
           <a
             href="https://docs.google.com/forms/d/e/1FAIpQLSec2RvLzYqeWZ-gkKzfXciO7Z9aXyLFNTqWV0npTTQXD71gDQ/viewform"

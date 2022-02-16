@@ -145,7 +145,7 @@ const LoginPage = (props) => {
           </h1>
           <br></br>
           <MicrosoftLogin
-            clientId="bf8681db-1c8d-4f9f-8d94-14deca9788a4"
+            clientId="f6b3d383-0b8e-4a8d-9f3f-4271c1d74d4f"
             authCallback={authHandler}
           />
           <br></br>
