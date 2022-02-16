@@ -5,6 +5,7 @@ import { IconButton, Collapse, Button } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Link as Scroll } from "react-scroll";
 import { useHistory } from "react-router-dom";
+import photo from "../../photo-1-1.png"
 
 const useStyles = makeStyles((theme) => ({
   full: {
@@ -84,14 +85,14 @@ const Main = (props) => {
           collapsedHeight={50}
         >
           <div className={classes.container}>
-            {/* <img
+            <img
               width="200"
               height="80"
-              src="https://hrkit.rometheme.net/arthoz/wp-content/uploads/sites/2/2021/01/photo-1-1.png"
+              src={photo}
               class="attachment-full size-full"
               alt=""
               loading="lazy"
-            ></img> */}
+            ></img>
             <h1 className={classes.title}>
               Pictoreal presents<br></br>
               <span className={classes.colorText}>Pics-o-reel</span>
