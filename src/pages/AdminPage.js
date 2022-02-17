@@ -160,7 +160,7 @@ const AdminPage = (props) => {
 
       const newOptions = {
         method: "GET",
-        url: "https://pics-o-reel-api.herokuapp.com/entries/leaderboard/",
+        url: "https://picsoreel-api.pict-o-real.in/entries/leaderboard/",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

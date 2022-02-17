@@ -74,7 +74,7 @@ const LoginPage = (props) => {
     }
     const options = {
       method: "POST",
-      url: "https://pics-o-reel-api.herokuapp.com/user/login/",
+      url: "https://picsoreel-api.pict-o-real.in/user/login/",
       data: {
         idToken: data.idToken.rawIdToken,
       },
@@ -89,7 +89,7 @@ const LoginPage = (props) => {
         // setLoginError("");
         const allEntriesAPI = {
           method: "GET",
-          url: "https://pics-o-reel-api.herokuapp.com/entries/allentries/",
+          url: "https://picsoreel-api.pict-o-real.in/entries/allentries/",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
